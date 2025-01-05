@@ -16,5 +16,6 @@ public class CustomFormatter {
         System.out.println(CustomFormatter.format(template, values));
         System.out.println();
         System.out.println("User should enter id");
+        System.out.println("this is the system");
     }
 }
