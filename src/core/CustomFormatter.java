@@ -15,7 +15,5 @@ public class CustomFormatter {
         Map<String,String> values = Map.of("name","Pratiksha","age","22");
         System.out.println(CustomFormatter.format(template, values));
         System.out.println();
-        System.out.println("User should enter id");
-        System.out.println("this is the system");
     }
 }
