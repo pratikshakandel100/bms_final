@@ -6,11 +6,15 @@ package features.kyc.view;
 
 import core.BaseApp;
 import core.CustomDateFormatter;
+import core.MessageStringManager;
 import core.Session;
 import features.auth.model.User;
 import features.auth.view.Dashboard;
 import features.kyc.model.IdentityType;
 import features.kyc.model.KYCDetails;
+import features.message.controller.MessageController;
+import features.message.model.MessageInfo;
+import features.message.model.MessageType;
 import javax.swing.JOptionPane;
 
 /**
@@ -101,7 +105,7 @@ public class KYCScreen extends javax.swing.JFrame {
 
         nameLabel1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         nameLabel1.setForeground(new java.awt.Color(102, 102, 102));
-        nameLabel1.setText("Note: Your Account will be opened once KYC is approved.");
+        nameLabel1.setText("Note: You can request to open Bank Account once KYC is approved.");
 
         rdoBtnGroup.add(rdoNationalID);
         rdoNationalID.setText("National ID");
@@ -160,47 +164,39 @@ public class KYCScreen extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(nameLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblEmail)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblDob1))
-                            .addComponent(personalinformationLabel))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblDob)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(nameLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblEmail)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblDob1))
+                                    .addComponent(personalinformationLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 44, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(rdoDL)
+                                .addGap(26, 26, 26)))
+                        .addComponent(rdoNationalID)
+                        .addGap(36, 36, 36))))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(rdoNationalID))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(citizenshipnumberLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dobLabel1))
-                            .addComponent(tfIdentityIssueDate, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(nameLabel1)
-                            .addGap(25, 25, 25)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(13, 13, 13)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(rdoPassport)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(rdoDL))
+                                    .addComponent(rdoPassport)
                                     .addComponent(addressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(citizenshipnumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tfIdentityNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,8 +204,19 @@ public class KYCScreen extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(74, 74, 74)
                                 .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(63, 63, 63)))
-                .addGap(0, 14, Short.MAX_VALUE))
+                        .addGap(63, 125, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(citizenshipnumberLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(dobLabel1))
+                                .addComponent(tfIdentityIssueDate, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(nameLabel1)
+                                .addGap(25, 25, 25)))
+                        .addGap(0, 9, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(createaccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -287,10 +294,13 @@ public class KYCScreen extends javax.swing.JFrame {
         int userId = Session.getSession().getLoggedInUser().getUserId();
         String identityType = selectedIdentityType.name();
         String identityNumber = tfIdentityNumber.getText();
-        KYCDetails kYCDetails = new KYCDetails(userId, identityType, identityNumber, CustomDateFormatter.convertToDate(tfIdentityIssueDate.getDate().toString()));
+        java.sql.Date formattedDate = CustomDateFormatter.convertPickedDateToSQLDate(tfIdentityIssueDate.getDate().toString());
+        KYCDetails kYCDetails = new KYCDetails(userId, identityType, identityNumber,formattedDate);
         boolean result = BaseApp.getKycController().submitKYCDetail(kYCDetails);
         if(result){
         int response = JOptionPane.showConfirmDialog(this, "KYC Submitted successful! Do you want to proceed to Dashboard Screen?", "Success", JOptionPane.OK_CANCEL_OPTION);
+        MessageInfo message = new MessageInfo(MessageStringManager.KYC_INFO_TITLE,MessageStringManager.KYC_INFO_MESSAGE);
+        new MessageController().saveUserMessage(message,MessageType.KYC);
         if (response == JOptionPane.OK_OPTION) {
                     // Open LoginScreen and close RegisterScreen
                     new Dashboard().setVisible(true);

@@ -1,4 +1,5 @@
 package core;
+
 import database.DbConnection;
 import features.auth.model.User;
 
@@ -19,7 +20,7 @@ public class Session {
 
     public void stopDbConnection(){
         if(dbConnection != null){
-            dbConnection.closeConnection();
+            dbConnection = null;
         }
         dbConnection = null;
     }
@@ -34,6 +35,12 @@ public class Session {
         }
         return session;
     }
+    
+    public void stopSession(){
+       stopDbConnection();
+       clearUserSession();
+       startDbConnection();
+    }
 
     public void setUserToSession(User user){
         this.loggedInUser = user;
@@ -45,4 +52,5 @@ public class Session {
     public User getLoggedInUser(){
         return this.loggedInUser;
     }
+    
 }

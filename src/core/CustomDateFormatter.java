@@ -12,12 +12,30 @@ public class CustomDateFormatter {
      * and a formatted string in "yyyy/MM/dd" format.
      *
      * @param dateStr The input date string (e.g., "Fri Jan 10 09:11:13 NPT 2025").
-     * @throws ParseException If the input date string cannot be parsed.
+     * @return 
      */
     public static String convertPickedToDateAndFormatted(String dateStr) {
         try {
             // Define the input and output formats
             SimpleDateFormat inputFormat = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy/MM/dd");
+            
+            // Parse the input date string into a Date object
+            Date parsedDate = inputFormat.parse(dateStr);
+            // Format the Date object into the desired string format
+            String formattedDate = outputFormat.format(parsedDate);
+            // Return both results
+            return formattedDate;
+        } catch (ParseException ex) {
+            Logger.getLogger(CustomDateFormatter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    private static String convertPickedToDateToSQLFormatted(String dateStr) {
+        try {
+            // Define the input and output formats
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy/MM/dd");
             
             // Parse the input date string into a Date object
@@ -48,7 +66,7 @@ public class CustomDateFormatter {
     public static java.sql.Date convertToDate(String dateStr) {
         try {
             // Define the input and output formats
-            SimpleDateFormat inputFormat = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy");
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy/mm/dd");
             // Parse the input date string into a Date object
             Date parsedDate = inputFormat.parse(dateStr);
             // Convert the Date object to java.sql.Date
@@ -59,5 +77,10 @@ public class CustomDateFormatter {
             Logger.getLogger(CustomDateFormatter.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    public static java.sql.Date convertPickedDateToSQLDate(String date){
+        String formattedSqlDate = convertPickedToDateAndFormatted(date);
+        return convertToDate(formattedSqlDate);
     }
 }

@@ -1,16 +1,16 @@
 package features.auth.view;
 
 import core.BaseApp;
+import core.MessageStringManager;
 import core.Session;
 import features.auth.model.User;
 import features.kyc.controller.KYCController;
 import features.kyc.model.KYCDetails;
-import features.kyc.view.KYCScreen;
+import features.message.controller.MessageController;
+import features.message.model.MessageInfo;
+import features.message.model.MessageType;
 import javax.swing.JOptionPane;
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 
 /**
  *
@@ -22,7 +22,6 @@ public class Dashboard extends javax.swing.JFrame {
      * Creates new form Dashboard
      */
     public Dashboard() {
-        
         initComponents();
     }
 
@@ -38,15 +37,16 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         MainAccountPanel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        kycInfoPanel = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        nameLabel1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        infoPanel = new javax.swing.JPanel();
+        pInfotitle = new javax.swing.JLabel();
+        pInfoLabel = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         requestBankAccountPanel = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -56,6 +56,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         jLabel11.setText("Reuqest to open a bank account?");
 
@@ -81,8 +82,6 @@ public class Dashboard extends javax.swing.JFrame {
         MainAccountPanel.setDoubleBuffered(false);
         MainAccountPanel.setEnabled(false);
 
-        jLabel2.setText("Pratiksha");
-
         jPanel2.setBackground(new java.awt.Color(0, 0, 103));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -101,6 +100,15 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Deposit");
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Log out");
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                onLogoutClick(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -108,10 +116,12 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(37, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel8)
+                        .addComponent(jLabel6))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,38 +134,55 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(14, 14, 14))
         );
 
-        kycInfoPanel.setBackground(new java.awt.Color(255, 255, 255));
-        kycInfoPanel.setName("RequestBankAccountPannel"); // NOI18N
+        infoPanel.setBackground(new java.awt.Color(255, 255, 255));
+        infoPanel.setName("RequestBankAccountPannel"); // NOI18N
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel10.setText("KYC Info");
+        pInfotitle.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        pInfotitle.setText("KYC Info");
 
-        nameLabel1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        nameLabel1.setForeground(new java.awt.Color(102, 102, 102));
-        nameLabel1.setText("You have already submitted the KYC details and it is waiting for approval.");
+        pInfoLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        pInfoLabel.setForeground(new java.awt.Color(51, 0, 255));
+        pInfoLabel.setText("You have already submitted the KYC details and it is waiting for approval.");
 
-        javax.swing.GroupLayout kycInfoPanelLayout = new javax.swing.GroupLayout(kycInfoPanel);
-        kycInfoPanel.setLayout(kycInfoPanelLayout);
-        kycInfoPanelLayout.setHorizontalGroup(
-            kycInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(kycInfoPanelLayout.createSequentialGroup()
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setText("X");
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                onCloseMessageInfo(evt);
+            }
+        });
+
+        javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
+        infoPanel.setLayout(infoPanelLayout);
+        infoPanelLayout.setHorizontalGroup(
+            infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(infoPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(kycInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(nameLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(infoPanelLayout.createSequentialGroup()
+                        .addComponent(pInfoLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(infoPanelLayout.createSequentialGroup()
+                        .addComponent(pInfotitle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7)))
+                .addContainerGap())
         );
-        kycInfoPanelLayout.setVerticalGroup(
-            kycInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(kycInfoPanelLayout.createSequentialGroup()
+        infoPanelLayout.setVerticalGroup(
+            infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(infoPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel10)
+                .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pInfotitle)
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nameLabel1)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(pInfoLabel)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         requestBankAccountPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -189,8 +216,8 @@ public class Dashboard extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         requestBankAccountPanelLayout.setVerticalGroup(
             requestBankAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,7 +228,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(requestBankAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -234,7 +261,7 @@ public class Dashboard extends javax.swing.JFrame {
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel15)))
-                .addContainerGap(348, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         requestLoanAccountPanelLayout.setVerticalGroup(
             requestLoanAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,21 +275,25 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel2.setText("Pratiksha");
+
         javax.swing.GroupLayout MainAccountPanelLayout = new javax.swing.GroupLayout(MainAccountPanel);
         MainAccountPanel.setLayout(MainAccountPanelLayout);
         MainAccountPanelLayout.setHorizontalGroup(
             MainAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainAccountPanelLayout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(MainAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(requestBankAccountPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(requestLoanAccountPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainAccountPanelLayout.createSequentialGroup()
-                        .addComponent(kycInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(MainAccountPanelLayout.createSequentialGroup()
+                        .addComponent(infoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(51, 51, 51)
                         .addComponent(jLabel2)
-                        .addGap(13, 13, 13)))
+                        .addGap(9, 9, 9))
+                    .addGroup(MainAccountPanelLayout.createSequentialGroup()
+                        .addComponent(requestBankAccountPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 35, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         MainAccountPanelLayout.setVerticalGroup(
@@ -271,14 +302,11 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(MainAccountPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(MainAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MainAccountPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(73, 73, 73))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainAccountPanelLayout.createSequentialGroup()
-                        .addComponent(kycInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(requestBankAccountPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(requestBankAccountPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(requestLoanAccountPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -287,10 +315,10 @@ public class Dashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainAccountPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(MainAccountPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,16 +333,46 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        kycInfoPanel.setVisible(true);
+        User loggedInUser = Session.getSession().getLoggedInUser();
+        MessageInfo message = new MessageController().getUserLastMessage();
         requestBankAccountPanel.setVisible(false);
         requestLoanAccountPanel.setVisible(false);
-        User loggedInUser = Session.getSession().getLoggedInUser();
-        KYCController kycController = BaseApp.getKycController();
-        KYCDetails kYCDetails = kycController.getKYCDetailsFromUserId(String.valueOf(loggedInUser.getUserId()));
-        if(kYCDetails.isVerified()){
-            kycInfoPanel.setVisible(false);
+        if(message != null){
+            pInfotitle.setText(message.getTitle());
+            pInfoLabel.setText(message.getMessage());
+            infoPanel.setVisible(true);
+            System.out.println(message.getMessageType().toUpperCase());
+            switch (message.getMessageType().toUpperCase()) {
+                case "KYC" -> {
+                    requestBankAccountPanel.setVisible(false);
+                    requestLoanAccountPanel.setVisible(false);
+                }
+                case "ACCOUNT" -> {
+                    requestBankAccountPanel.setVisible(false);
+                    requestLoanAccountPanel.setVisible(true);
+                }
+                case "LOAN" -> {
+                    requestBankAccountPanel.setVisible(false);
+                    requestLoanAccountPanel.setVisible(false);
+                }
+                case "CARD" -> {
+                    requestBankAccountPanel.setVisible(false);
+                    requestLoanAccountPanel.setVisible(false);
+                }
+                default -> {
+                    requestBankAccountPanel.setVisible(false);
+                    requestLoanAccountPanel.setVisible(false);
+                }
+            }  
+        } else {
+            infoPanel.setVisible(false);
+
+            KYCController kYCController = BaseApp.getKycController();
+            KYCDetails kycDetails = kYCController.getKYCDetailsFromUserId(String.valueOf(loggedInUser.getUserId()));
+            if(kycDetails.isVerified()){
             requestBankAccountPanel.setVisible(true);
             requestLoanAccountPanel.setVisible(true);
+            }
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -324,20 +382,45 @@ public class Dashboard extends javax.swing.JFrame {
          if (response == JOptionPane.OK_OPTION) {
                 // Open AccountScreen and close LoginScreen
                 int userId = Session.getSession().getLoggedInUser().getUserId();
-                KYCDetails kycDetails = BaseApp.getKycController().getKYCDetailsFromUserId(String.valueOf(userId));
-                if(kycDetails == null){
-                    new KYCScreen().setVisible(true);
-                } else {
-                    new Dashboard().setVisible(true);
+                boolean result = BaseApp.getAccountController().openBankAccount(userId);
+                if(result){
+                    JOptionPane.showMessageDialog(this, "You request to open bank account has received!", "Request Received", JOptionPane.INFORMATION_MESSAGE);
+                    infoPanel.setVisible(true);
+                    MessageInfo message = new MessageInfo(MessageStringManager.ACCOUNT_OPENED_INFO_TITLE, MessageStringManager.ACCOUNT_OPENED_INFO_MESSAGE);
+                    new MessageController().deleteUserMessage();
+                    new MessageController().saveUserMessage(message,MessageType.ACCOUNT);
+                    requestBankAccountPanel.setVisible(false);
                 }
-                dispose();
             }              
          }
-    }//GEN-LAST:event_onRequestToOpenBankAccount
-
+//GEN-LAST:event_onRequestToOpenBankAccount
     private void onRequestToOpenLoanAccount(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onRequestToOpenLoanAccount
         // TODO add your handling code here:
+        String loanAmount = JOptionPane.showInputDialog(null, "Enter the Loan Amount to be request", "Request Loan Account Opening", JOptionPane.INFORMATION_MESSAGE);
+        // Open AccountScreen and close LoginScreen
+        int userId = Session.getSession().getLoggedInUser().getUserId();
+        boolean result = BaseApp.getAccountController().openLoanAccount(userId,Integer.parseInt(loanAmount));
+        if(result){
+            JOptionPane.showMessageDialog(null, "You request to open loan account has received!", "Request Received", JOptionPane.INFORMATION_MESSAGE);
+            infoPanel.setVisible(true);
+            MessageInfo message = new MessageInfo(MessageStringManager.LOAN_ACCOUNT_OPENED_INFO_TITLE, MessageStringManager.LOAN_ACCOUNT_OPENED_INFO_MESSAGE);
+            new MessageController().deleteUserMessage();
+            new MessageController().saveUserMessage(message,MessageType.LOAN);
+            requestLoanAccountPanel.setVisible(false);
+        }
     }//GEN-LAST:event_onRequestToOpenLoanAccount
+
+    private void onCloseMessageInfo(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onCloseMessageInfo
+        // TODO add your handling code here:
+        infoPanel.setVisible(false);
+    }//GEN-LAST:event_onCloseMessageInfo
+
+    private void onLogoutClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onLogoutClick
+        // TODO add your handling code here:
+        Session.getSession().stopSession();
+        new LoginScreen().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_onLogoutClick
 
     /**
      * @param args the command line arguments
@@ -376,8 +459,8 @@ public class Dashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MainAccountPanel;
+    private javax.swing.JPanel infoPanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
@@ -389,11 +472,13 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel kycInfoPanel;
-    private javax.swing.JLabel nameLabel1;
+    private javax.swing.JLabel pInfoLabel;
+    private javax.swing.JLabel pInfotitle;
     private javax.swing.JPanel requestBankAccountPanel;
     private javax.swing.JPanel requestLoanAccountPanel;
     // End of variables declaration//GEN-END:variables

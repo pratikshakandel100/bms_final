@@ -85,36 +85,31 @@
                           </Group>
                           <Component id="fullnameLabel" alignment="0" min="-2" pref="83" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="passwordLabel" min="-2" pref="67" max="-2" attributes="0"/>
-                                          <Component id="tfPassword" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
-                                          <Component id="phonenumberLabel" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
-                                          <Component id="tfPhone" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="tfDOB" alignment="0" max="32767" attributes="0"/>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
-                                                  <Component id="dobLabel1" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <Component id="dobLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="confirmpasswordLabel" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                                          <Component id="tfConfirmPassword" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="passwordLabel" min="-2" pref="67" max="-2" attributes="0"/>
+                                  <Component id="tfPassword" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
+                                  <Component id="phonenumberLabel" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
+                                  <Component id="tfPhone" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="tfDOB" alignment="0" max="32767" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
+                                          <Component id="dobLabel1" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Component id="createaccountLabel" alignment="0" min="-2" pref="356" max="-2" attributes="0"/>
+                                  <Component id="dobLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="confirmpasswordLabel" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="tfConfirmPassword" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="58" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="createaccountLabel" alignment="0" min="-2" pref="356" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+              <EmptySpace pref="70" max="32767" attributes="0"/>
               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="28" max="32767" attributes="0"/>
           </Group>

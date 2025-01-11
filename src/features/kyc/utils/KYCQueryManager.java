@@ -3,7 +3,6 @@ package features.kyc.utils;
 
 import core.CustomDateFormatter;
 import core.CustomFormatter;
-
 import java.sql.Date;
 import java.util.Map;
 
@@ -22,7 +21,7 @@ public class KYCQueryManager {
     // ------------------- 2. Submit KYC Details ------------------- //
     public static String submitKYCDetailQuery(int userId, String identityType, String identityNumber, Date identityIssueDate) {
         String template = "INSERT INTO {kyc_table} (userId, identityType, identityNumber,identityIssueDate) " +
-                "VALUES ('{userId}', '{identityType}', '{identityNumber}', {identityIssueDate}) " +
+                "VALUES ('{userId}', '{identityType}', '{identityNumber}', '{identityIssueDate}') " +
                 
                 "ON DUPLICATE KEY UPDATE identityType = '{identityType}', identityNumber = '{identityNumber}', identityIssueDate='{identityIssueDate}'";
         Map<String, String> values = Map.of(

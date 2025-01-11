@@ -1,7 +1,6 @@
 package features.kyc.model;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 public class KYCDetails {
     private int kycId;
@@ -9,17 +8,7 @@ public class KYCDetails {
     private String identityType;
     private String identityNumber;
     private Date identityIssueDate;
-
-    public Date getIdentityIssueDate() {
-        return this.identityIssueDate;
-    }
-
-    public void setIdentityIssueDate(Date identityIssueDate) {
-        this.identityIssueDate = identityIssueDate;
-    }
-
     private boolean isVerified;
-    private Timestamp createdAt;
 
 
     public KYCDetails(){
@@ -73,12 +62,12 @@ public class KYCDetails {
     public void setVerified(boolean isVerified) {
         this.isVerified = isVerified;
     }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    
+        public Date getIdentityIssueDate() {
+        return this.identityIssueDate;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
+    public void setIdentityIssueDate(Date identityIssueDate) {
+        this.identityIssueDate = identityIssueDate;
     }
 }

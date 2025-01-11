@@ -298,13 +298,8 @@ public class RegisterScreen extends javax.swing.JFrame {
     String confirmPassword = String.valueOf(tfConfirmPassword.getPassword());
     String phone = tfPhone.getText().trim();
     String dob = tfDOB.getDate().toString();
-    String dobFormatted = CustomDateFormatter.convertPickedToDateAndFormatted(tfDOB.getDate().toString());
-        System.out.println(dobFormatted);
-        
-    System.out.println(String.valueOf(tfPassword.getPassword()));        
-        System.out.println(String.valueOf(tfConfirmPassword.getPassword()));
-
-
+    java.sql.Date dobFormatted = CustomDateFormatter.convertPickedDateToSQLDate(tfDOB.getDate().toString());
+       
     // Validate fields
     if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || phone.isEmpty() || dob.isEmpty()) {
         JOptionPane.showMessageDialog(this, "All fields are required!", "Validation Error", JOptionPane.ERROR_MESSAGE);
@@ -328,7 +323,7 @@ public class RegisterScreen extends javax.swing.JFrame {
             user.setEmail(tfEmail.getText());
             user.setPassword(tfPassword.getText());
             user.setPhone(tfPhone.getText());
-            user.setDOB(CustomDateFormatter.convertToDate(tfDOB.getDate().toString()));
+            user.setDOB(dobFormatted);
             UserController userController = new UserController();
             boolean isRegisterSuccess = userController.registerUser(user);
 
