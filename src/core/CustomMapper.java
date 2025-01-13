@@ -25,7 +25,7 @@ public class CustomMapper {
                     // Ignore fields that don't match any column in ResultSet
                 }
             }
-            return object;
+            return object
         } catch (Exception e) {
             throw new RuntimeException("Error mapping ResultSet to object: " + e.getMessage(), e);
         }
