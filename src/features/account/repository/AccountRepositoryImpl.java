@@ -1,11 +1,5 @@
 package features.account.repository;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import core.BaseApp;
 import core.CustomMapper;
 import core.Session;
@@ -14,6 +8,11 @@ import features.account.model.Account;
 import features.account.model.AccountType;
 import features.account.utils.AccountQueryManager;
 import features.notification.utils.NotificationStringManager;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class AccountRepositoryImpl implements AccountRepository{
 
@@ -75,7 +74,6 @@ public class AccountRepositoryImpl implements AccountRepository{
         Account account = null; // Initialize the variable
         try {
             String query = AccountQueryManager.getAccountQuery(accountId,accountNumber,accountStatus);
-            System.out.println(query);
             ResultSet result = dbConnection.executeWithResult(query);
             if (result.next()) { // Use if instead of while, as we expect only one result
                 account = CustomMapper.mapResultSetToObject(result, Account.class);
@@ -85,7 +83,6 @@ public class AccountRepositoryImpl implements AccountRepository{
         }
         return account; // Return null if no result is found or exception occurs
     }
-
     public Account getUserActiveAccountFromId(int accountId){
         return getAccount(Integer.toString(accountId), null, "Active");
     }
@@ -94,10 +91,25 @@ public class AccountRepositoryImpl implements AccountRepository{
         return getAccount(null, accountNumber, "Active");
     }
 
-    public List<Account> getAllUserAccount(int userId, String accountStatus) {
+    public List<Account> getAllUserAccountByStatus(int userId, String accountStatus) {
         List<Account> accounts = new ArrayList<>(); // Initialize the variable
         try {
-            String query = AccountQueryManager.getAllUserAccountQuery(userId, accountStatus);
+            String query = AccountQueryManager.getAllUserAccountByStatusQuery(userId, accountStatus);
+            ResultSet result = dbConnection.executeWithResult(query);
+            while (result.next()) { // Use if instead of while, as we expect only one result
+                Account account = CustomMapper.mapResultSetToObject(result, Account.class);
+                accounts.add(account);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return accounts; // Return null if no result is found or exception occurs
+    }
+    
+    public List<Account> getAllUserAccount(int userId) {
+        List<Account> accounts = new ArrayList<>(); // Initialize the variable
+        try {
+            String query = AccountQueryManager.getAllUserAccountQuery(userId);
             ResultSet result = dbConnection.executeWithResult(query);
             while (result.next()) { // Use if instead of while, as we expect only one result
                 Account account = CustomMapper.mapResultSetToObject(result, Account.class);
@@ -110,15 +122,16 @@ public class AccountRepositoryImpl implements AccountRepository{
     }
 
     public List<Account> getAllActiveUserAccount(int userId) {
-        return getAllUserAccount(userId, "Active");
+//        System.out.println(getAllUserAccountByStatus(userId, "Active"));
+        return getAllUserAccountByStatus(userId, "Active");
     }
 
     public List<Account> getAllInactiveUserAccount(int userId) {
-        return getAllUserAccount(userId, "Inctive");
+        return getAllUserAccountByStatus(userId, "Inactive");
     }
 
     public List<Account> getAllClosedUserAccount(int userId) {
-        return getAllUserAccount(userId, "Closed");
+        return getAllUserAccountByStatus(userId, "Closed");
     }
 
     public boolean approveAccountOpeningRequest(int userId) {  

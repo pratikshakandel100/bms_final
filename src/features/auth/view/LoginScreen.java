@@ -2,10 +2,13 @@ package features.auth.view;
 
 import core.BaseApp;
 import core.Session;
+import features.account.model.Account;
+import features.account.view.screens.AccountListScreen;
 import features.auth.controller.UserController;
 import features.auth.model.User;
 import features.kyc.model.KYCDetails;
 import features.kyc.view.KYCScreen;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class LoginScreen extends javax.swing.JFrame {
@@ -276,10 +279,13 @@ public class LoginScreen extends javax.swing.JFrame {
                 // Open AccountScreen and close LoginScreen
                 int userId = Session.getSession().getLoggedInUser().getUserId();
                 KYCDetails kycDetails = BaseApp.getKycController().getKYCDetailsFromUserId(String.valueOf(userId));
+                List<Account> accountList = BaseApp.getAccountController().getAllInactiveUserAccount(userId);
                 if(kycDetails == null){
                     new KYCScreen().setVisible(true);
-                } else {
+                } if(accountList == null || accountList.isEmpty()){
                     new Dashboard().setVisible(true);
+                }else {
+                    new AccountListScreen().setVisible(true);
                 }
                 dispose();
             }

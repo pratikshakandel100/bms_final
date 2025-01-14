@@ -8,6 +8,7 @@ import features.kyc.controller.KYCController;
 import features.kyc.repository.KYCRepository;
 import features.kyc.repository.KYCRepositoryImpl;
 import features.kyc.usecase.KYCUsecase;
+import features.message.controller.MessageController;
 import features.notification.controller.NotificationController;
 import features.notification.repository.NotificationRepository;
 import features.notification.repository.NotificationRepositoryImpl;
@@ -39,6 +40,11 @@ public class BaseApp {
 
     public static AccountController getAccountController(){
         return accountController;
+    }
+    
+    // For Message
+    public static MessageController getMessageController() {
+    return new MessageController();
     }
 
 }

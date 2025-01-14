@@ -1,9 +1,8 @@
 package features.account.controller;
 
-import java.util.List;
-
 import features.account.model.Account;
 import features.account.usecase.AccountUsecase;
+import java.util.List;
 
 public class AccountController {
     AccountUsecase accountUsecase;
@@ -46,6 +45,14 @@ public class AccountController {
 
     public boolean approveLoanAccountOpeningRequest(int userId) {
         return accountUsecase.approveLoanAccountOpeningRequest(userId);
+    }
+    
+    public List<Account> getAllUserAccountByStatus(int userId, String accountStatus) {
+        return accountUsecase.getAllUserAccountByStatus(userId, accountStatus);
+    }
+    
+    public List<Account> getAllUserAccount(int userId) {
+        return accountUsecase.getAllUserAccount(userId);
     }
     
 

@@ -37,9 +37,15 @@ public static String getAccountQuery(String accountId, String accountNumber, Str
     return CustomFormatter.format(template, values);
 }
 
-public static String getAllUserAccountQuery(int userId, String status) {
+public static String getAllUserAccountByStatusQuery(int userId, String status) {
     String template = "select * from {account_table} where userId = {userId} and status = '{status}'";
     Map<String, String> values = Map.of("account_table", account_table, "userId",Integer.toString(userId),"status",status);
+    return CustomFormatter.format(template, values);
+}
+
+public static String getAllUserAccountQuery(int userId) {
+    String template = "select * from {account_table} where userId = {userId}";
+    Map<String, String> values = Map.of("account_table", account_table, "userId",Integer.toString(userId));
     return CustomFormatter.format(template, values);
 }
 

@@ -3,6 +3,7 @@ package features.account.model;
 public class Account {
     private int accountId;
     private int userId;
+    private String accountNumber;
     private String accountType;
     private double balance;
     private String status;
@@ -10,9 +11,10 @@ public class Account {
     public Account(){}
     
     // Public constructor
-    public Account(int accountId, int userId, String accountType, double balance, String status) {
+    public Account(int accountId, int userId, String accountNumber, String accountType, double balance, String status) {
         this.accountId = accountId;
         this.userId = userId;
+        this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = balance;
         this.status = status;
@@ -33,6 +35,13 @@ public class Account {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+    public String getAccountNumber() {
+        return this.accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public String getAccountType() {

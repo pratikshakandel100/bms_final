@@ -1,9 +1,8 @@
 package features.account.usecase;
 
-import java.util.List;
-
 import features.account.model.Account;
 import features.account.repository.AccountRepository;
+import java.util.List;
 
 public class AccountUsecase {
     AccountRepository accountRepository;
@@ -38,7 +37,7 @@ public class AccountUsecase {
 
     public List<Account> getAllInactiveUserAccount(int userId){
         return accountRepository.getAllInactiveUserAccount(userId);
-    }
+    }  
 
     public boolean approveAccountOpeningRequest(int userId) {
         return accountRepository.approveAccountOpeningRequest(userId);
@@ -46,6 +45,14 @@ public class AccountUsecase {
 
     public boolean approveLoanAccountOpeningRequest(int userId) {
         return accountRepository.approveLoanAccountOpeningRequest(userId);
+    }
+    
+    public List<Account> getAllUserAccountByStatus(int userId, String accountStatus) {
+        return accountRepository.getAllUserAccountByStatus(userId, accountStatus);
+    }
+    
+    public List<Account> getAllUserAccount(int userId) {
+        return accountRepository.getAllUserAccount(userId);
     }
     
 
