@@ -305,7 +305,7 @@ public class KYCScreen extends javax.swing.JFrame {
                     // Open LoginScreen and close RegisterScreen
                     new Dashboard().setVisible(true);
                     dispose();
-                }
+            }
         }
     } catch(Exception ex){
     ex.printStackTrace();

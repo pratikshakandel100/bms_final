@@ -4,7 +4,6 @@
  */
 package features.message.view;
 
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
@@ -30,7 +29,7 @@ public class ATMWithdrawPopup {
     private static void showWithdrawPopup(JFrame parent) {
         // Create a JDialog for the popup
         JDialog popup = new JDialog(parent, "ATM Withdraw", true);
-        popup.setSize(400, 250);
+        popup.setSize(400, 350);
         popup.setLayout(new GridBagLayout());
         popup.setLocationRelativeTo(parent);
 
@@ -60,10 +59,32 @@ public class ATMWithdrawPopup {
         gbc.gridy = 1;
         popup.add(balanceField, gbc);
 
+        // Description
+        JLabel descriptionLabel = new JLabel("Description:");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        popup.add(descriptionLabel, gbc);
+
+        JTextField descriptionField = new JTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        popup.add(descriptionField, gbc);
+
+        // Reference
+        JLabel referenceLabel = new JLabel("Reference (Optional):");
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        popup.add(referenceLabel, gbc);
+
+        JTextField referenceField = new JTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        popup.add(referenceField, gbc);
+
         // Confirm Withdraw Button
         JButton confirmButton = new JButton("Confirm Withdraw");
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 4;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         popup.add(confirmButton, gbc);
@@ -72,10 +93,12 @@ public class ATMWithdrawPopup {
         confirmButton.addActionListener((ActionEvent e) -> {
             String accountNumber = accountNumberField.getText().trim();
             String balance = balanceField.getText().trim();
+            String description = descriptionField.getText().trim();
+            String reference = referenceField.getText().trim();
 
             // Validate the input
-            if (accountNumber.isEmpty() || balance.isEmpty()) {
-                JOptionPane.showMessageDialog(popup, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (accountNumber.isEmpty() || balance.isEmpty() || description.isEmpty()) {
+                JOptionPane.showMessageDialog(popup, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -93,7 +116,9 @@ public class ATMWithdrawPopup {
                 // Show confirmation dialog
                 JOptionPane.showMessageDialog(popup,
                         "Withdrawal confirmed:\nAccount: " + accountNumber +
-                                "\nAmount: $" + amount,
+                                "\nAmount: $" + amount +
+                                "\nDescription: " + description +
+                                (reference.isEmpty() ? "" : "\nReference: " + reference),
                         "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 popup.dispose(); // Close the popup

@@ -33,7 +33,7 @@ public class DepositPopup {
     private static void showDepositPopup(JFrame parent) {
         // Create a JDialog for the popup
         JDialog popup = new JDialog(parent, "Deposit Funds", true);
-        popup.setSize(400, 300);
+        popup.setSize(500, 300);
         popup.setLayout(new GridBagLayout());
         popup.setLocationRelativeTo(parent);
 
@@ -83,10 +83,33 @@ public class DepositPopup {
         gbc.gridy = 2;
         popup.add(balanceField, gbc);
 
+        // Description
+        JLabel descriptionLabel = new JLabel("Description:");
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        popup.add(descriptionLabel, gbc);
+
+        JTextField descriptionField = new JTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        popup.add(descriptionField, gbc);
+
+        // Reference
+        JLabel referenceLabel = new JLabel("Reference (Optional):");
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        popup.add(referenceLabel, gbc);
+
+        JTextField referenceField = new JTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        popup.add(referenceField, gbc);
+        
+        
         // Confirm Deposit Button
         JButton confirmButton = new JButton("Confirm Deposit");
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 5;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         popup.add(confirmButton, gbc);
@@ -98,6 +121,8 @@ public class DepositPopup {
             String month = monthField.getText().trim();
             String day = dayField.getText().trim();
             String balance = balanceField.getText().trim();
+            String description = descriptionField.getText().trim();
+            String reference = referenceField.getText().trim();
 
             // Validate the input
             if (accountNumber.isEmpty() || year.isEmpty() || month.isEmpty() || day.isEmpty() || balance.isEmpty()) {
@@ -132,7 +157,9 @@ public class DepositPopup {
                 JOptionPane.showMessageDialog(popup,
                         "Deposit confirmed:\nTo Account: " + accountNumber +
                                 "\nDate of Birth: " + year + "-" + month + "-" + day +
-                                "\nAmount: $" + amount,
+                                "\nAmount: $" + amount +
+                                "\nDescription: " + description +
+                                (reference.isEmpty() ? "" : "\nReference: " + reference),
                         "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 popup.dispose(); // Close the popup

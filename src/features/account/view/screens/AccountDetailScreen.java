@@ -4,19 +4,33 @@
  */
 package features.account.view.screens;
 
+import core.BaseApp;
+import core.Session;
+import features.account.controller.AccountController;
+import features.account.model.Account;
 import features.message.view.AccountTransferPopup;
+import features.transaction.controller.TransactionController;
+import features.transaction.model.Transaction;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Pratiksha
  */
-public class AcccountDetailScreen extends javax.swing.JFrame {
-
+public class AccountDetailScreen extends javax.swing.JFrame {
+    private int accountId;
+            
     /**
      * Creates new form AcccountDetailScreen
      */
-    public AcccountDetailScreen() {
+    public AccountDetailScreen(int accountId) {
+        this.accountId = accountId;
         initComponents();
+    }
+
+    AccountDetailScreen() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -37,29 +51,40 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
         accountnumberLabel = new javax.swing.JLabel();
         accountypeLabel = new javax.swing.JLabel();
         branchnameLevel = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        lblAccName = new javax.swing.JLabel();
+        lblAccNumber = new javax.swing.JLabel();
+        lblAccType = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel41 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        lblAmount = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnPay = new javax.swing.JButton();
-        btnPay1 = new javax.swing.JButton();
-        btnPay2 = new javax.swing.JButton();
-        btnPay3 = new javax.swing.JButton();
+        btnTransfer = new javax.swing.JButton();
+        btnDeposit = new javax.swing.JButton();
+        btnWithdraw = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblTransactionTable = new javax.swing.JTable();
 
         jButton1.setText("jButton1");
 
         jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -73,20 +98,20 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
 
         branchnameLevel.setText("Balance");
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel8.setText("Anil Kesari Shah");
+        lblAccName.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblAccName.setText("Anil Kesari Shah");
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel9.setText("9202923320423");
+        lblAccNumber.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblAccNumber.setText("9202923320423");
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel10.setText("Saving Account");
+        lblAccType.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblAccType.setText("Saving Account");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setText("Rs.");
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel12.setText("289555");
+        lblAmount.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblAmount.setText("289555");
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -97,10 +122,6 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -114,17 +135,17 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel8)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(lblAccName)
+                                .addComponent(lblAccNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                                .addComponent(lblAccType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(lblAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel14)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(457, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,22 +155,21 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameLabel)
-                    .addComponent(jLabel8))
+                    .addComponent(lblAccName))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(accountnumberLabel)
-                    .addComponent(jLabel9))
+                    .addComponent(lblAccNumber))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(branchnameLevel)
-                    .addComponent(jLabel12))
+                    .addComponent(lblAmount))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
+                    .addComponent(lblAccType)
                     .addComponent(accountypeLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -164,33 +184,33 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
             }
         });
 
-        btnPay1.setBackground(new java.awt.Color(255, 153, 51));
-        btnPay1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnPay1.setForeground(new java.awt.Color(255, 255, 255));
-        btnPay1.setText("Transfer Between Account");
-        btnPay1.addActionListener(new java.awt.event.ActionListener() {
+        btnTransfer.setBackground(new java.awt.Color(255, 153, 51));
+        btnTransfer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnTransfer.setForeground(new java.awt.Color(255, 255, 255));
+        btnTransfer.setText("Transfer Between Account");
+        btnTransfer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPay1ActionPerformed(evt);
+                btnTransferActionPerformed(evt);
             }
         });
 
-        btnPay2.setBackground(new java.awt.Color(255, 153, 51));
-        btnPay2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnPay2.setForeground(new java.awt.Color(255, 255, 255));
-        btnPay2.setText("ATM Deposit");
-        btnPay2.addActionListener(new java.awt.event.ActionListener() {
+        btnDeposit.setBackground(new java.awt.Color(255, 153, 51));
+        btnDeposit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnDeposit.setForeground(new java.awt.Color(255, 255, 255));
+        btnDeposit.setText("ATM Deposit");
+        btnDeposit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPay2ActionPerformed(evt);
+                btnDepositActionPerformed(evt);
             }
         });
 
-        btnPay3.setBackground(new java.awt.Color(255, 153, 51));
-        btnPay3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnPay3.setForeground(new java.awt.Color(255, 255, 255));
-        btnPay3.setText("Withdraw");
-        btnPay3.addActionListener(new java.awt.event.ActionListener() {
+        btnWithdraw.setBackground(new java.awt.Color(255, 153, 51));
+        btnWithdraw.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnWithdraw.setForeground(new java.awt.Color(255, 255, 255));
+        btnWithdraw.setText("Withdraw");
+        btnWithdraw.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPay3ActionPerformed(evt);
+                btnWithdrawActionPerformed(evt);
             }
         });
 
@@ -202,11 +222,11 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(btnPay)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnPay1)
+                .addComponent(btnTransfer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnPay2)
+                .addComponent(btnDeposit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnPay3)
+                .addComponent(btnWithdraw)
                 .addContainerGap(215, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -214,9 +234,9 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPay)
-                    .addComponent(btnPay1)
-                    .addComponent(btnPay2)
-                    .addComponent(btnPay3))
+                    .addComponent(btnTransfer)
+                    .addComponent(btnDeposit)
+                    .addComponent(btnWithdraw))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -225,18 +245,18 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 153, 0));
         jLabel7.setText("Payment History");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblTransactionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Date", "Amount", "Type", "Description", "Reference"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblTransactionTable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -258,7 +278,7 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -268,8 +288,8 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -290,20 +310,84 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
         // TODO add your handling code here:
-        AccountTransferPopup.openPopup(this);
+        
     }//GEN-LAST:event_btnPayActionPerformed
 
-    private void btnPay1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPay1ActionPerformed
+    private void btnTransferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnPay1ActionPerformed
+        new AccountTransferPopup().openPopup(this);
+    }//GEN-LAST:event_btnTransferActionPerformed
 
-    private void btnPay2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPay2ActionPerformed
+    private void btnDepositActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnPay2ActionPerformed
+    }//GEN-LAST:event_btnDepositActionPerformed
 
-    private void btnPay3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPay3ActionPerformed
+    private void btnWithdrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnPay3ActionPerformed
+    }//GEN-LAST:event_btnWithdrawActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        AccountController ac = BaseApp.getAccountController();
+        Account account = ac.getActiveAccountFromId(accountId);
+        setAccountInformation(account);
+        setTransactionHistory(account);
+        
+    }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        // TODO add your handling code here:
+        AccountController ac = BaseApp.getAccountController();
+        Account account = ac.getActiveAccountFromId(accountId);
+        setAccountInformation(account);
+        refreshTransactionHistory(account);
+    }//GEN-LAST:event_formWindowGainedFocus
+
+    public void setAccountInformation(Account account){
+        String fullname = Session.getSession().getLoggedInUser().getName();
+        // For Normal Account
+        lblAccName.setText(fullname);
+        lblAccNumber.setText(account.getAccountNumber());
+        lblAmount.setText(String.valueOf(account.getBalance()));
+        lblAccType.setText(String.format("%s Account", account.getAccountType()).toUpperCase());
+    }
+
+    void refreshTransactionHistory(Account account){
+        setTransactionHistory(account);
+    }
+
+    public void setTransactionHistory(Account account) {
+        int userId = Session.getSession().getLoggedInUser().getUserId();
+        TransactionController transactionController = BaseApp.getTransactionController();
+        List<Transaction> transactionList = transactionController.getAllUserTransaction(userId, account.getAccountId());
+        DefaultTableModel transactionTable = (DefaultTableModel) tblTransactionTable.getModel();
+    
+        // Clear existing rows
+        transactionTable.setRowCount(0);
+    
+        for (Transaction transaction : transactionList) {
+            System.out.println(transaction.getTransactionDateTime());
+            // Retrieve transaction details with fallbacks for null or empty values
+            String date = transaction.getTransactionDateTime() != null 
+                          ? transaction.getTransactionDateTime().toString()
+                          : "-";
+            String amount = String.valueOf(transaction.getAmount());
+                            
+            String type = transaction.getTransactionType() != null && !transaction.getTransactionType().isEmpty() 
+                          ? transaction.getTransactionType() 
+                          : "-";
+            String description = transaction.getDescription() != null && !transaction.getDescription().isEmpty() 
+                                 ? transaction.getDescription() 
+                                 : "-";
+            String reference = transaction.getReference() != null && !transaction.getReference().isEmpty() 
+                               ? transaction.getReference() 
+                               : "-";
+    
+            // Add a row to the table
+            transactionTable.addRow(new Object[]{date, amount, type, description, reference});
+        }
+    }
+    
 
     /**
      * @param args the command line arguments
@@ -322,20 +406,21 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AcccountDetailScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AccountDetailScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AcccountDetailScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AccountDetailScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AcccountDetailScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AccountDetailScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AcccountDetailScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AccountDetailScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AcccountDetailScreen().setVisible(true);
+                new AccountDetailScreen().setVisible(true);
             }
         });
     }
@@ -344,28 +429,27 @@ public class AcccountDetailScreen extends javax.swing.JFrame {
     private javax.swing.JLabel accountnumberLabel;
     private javax.swing.JLabel accountypeLabel;
     private javax.swing.JLabel branchnameLevel;
+    private javax.swing.JButton btnDeposit;
     private javax.swing.JButton btnPay;
-    private javax.swing.JButton btnPay1;
-    private javax.swing.JButton btnPay2;
-    private javax.swing.JButton btnPay3;
+    private javax.swing.JButton btnTransfer;
+    private javax.swing.JButton btnWithdraw;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private com.toedter.calendar.JDayChooser jDayChooser1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblAccName;
+    private javax.swing.JLabel lblAccNumber;
+    private javax.swing.JLabel lblAccType;
+    private javax.swing.JLabel lblAmount;
     private javax.swing.JLabel nameLabel;
+    private javax.swing.JTable tblTransactionTable;
     // End of variables declaration//GEN-END:variables
 }

@@ -265,7 +265,7 @@ public class LoginScreen extends javax.swing.JFrame {
     }
     // Login logic using UserController
     try {
-        UserController userController = new UserController();
+        UserController userController = BaseApp.getUserController();
         User user = userController.loginUser(email, password);
         if (user != null) {
             // Set the user in the session

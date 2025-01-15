@@ -4,6 +4,7 @@
  */
 package features.auth.view;
 
+import core.BaseApp;
 import core.CustomDateFormatter;
 import core.Session;
 import features.auth.controller.UserController;
@@ -324,7 +325,7 @@ public class RegisterScreen extends javax.swing.JFrame {
             user.setPassword(tfPassword.getText());
             user.setPhone(tfPhone.getText());
             user.setDOB(dobFormatted);
-            UserController userController = new UserController();
+            UserController userController = BaseApp.getUserController();
             boolean isRegisterSuccess = userController.registerUser(user);
 
             if (isRegisterSuccess) {

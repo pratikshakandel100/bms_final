@@ -59,7 +59,7 @@ public static String insertUser() {
     return CustomFormatter.format(template, values);
 } 
 
-public static String updatePointsQuery(int userId, int points) {
+public static String updateUserPointsQuery(int userId, int points) {
     String template = "update {user_table} set points = points+{points} where userId = {userId}";
     Map<String, String> values = Map.of("user_table", user_table, "points", Integer.toString(points), "userId",
             Integer.toString(userId));

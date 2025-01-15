@@ -1,5 +1,6 @@
 package features.auth.view;
 
+import core.BaseApp;
 import features.auth.controller.UserController;
 
 public class UserView {
@@ -31,7 +32,7 @@ public class UserView {
 
     // Admin
     public static boolean approvedBankAccount(int userId){
-        UserController uc = new UserController();
+        UserController uc = BaseApp.getUserController();
         // return uc.approveBankOpeningRequest(userId);
         return true;
     }

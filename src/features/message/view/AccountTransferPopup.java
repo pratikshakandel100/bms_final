@@ -4,38 +4,52 @@
  */
 package features.message.view;
 
-
-
-import java.awt.*;
+import core.BaseApp;
+import core.Session;
+import features.account.controller.AccountController;
+import features.account.model.Account;
+import features.account.model.AccountStatus;
+import features.account.model.AccountType;
+import features.auth.model.User;
+import features.transaction.controller.TransactionController;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class AccountTransferPopup {
+    private List<Account> accountList = new ArrayList<>();
+    private List<String> allAccountList=new ArrayList<>();
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Account Transfer Example");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(400, 200);
-
-            // Create a button to trigger the transfer popup
-            JButton transferButton = new JButton("Transfer Between Accounts");
-            transferButton.addActionListener(e -> showTransferPopup(frame));
-
-            frame.setLayout(new FlowLayout());
-            frame.add(transferButton);
-            frame.setVisible(true);
-        });
-    }
-    
-    public static void openPopup(JFrame frame){
+    public void openPopup(JFrame frame) {
+        fetchedALlUserActiveAccount();
         showTransferPopup(frame);
     }
 
-    private static void showTransferPopup(JFrame parent) {
+    private void showTransferPopup(JFrame parent) {
+       
+        String[] accountListCB;
         // Create a JDialog for the popup
+        if(allAccountList.size() >= 3){
+        accountListCB = new String[] {allAccountList.get(0),allAccountList.get(1),allAccountList.get(2)};
+        } else {
+        accountListCB = new String[] {allAccountList.get(0),allAccountList.get(1)};
+        }
+        
+        System.out.println(accountListCB);
+//        String[] accountListCB = new String[] {allAccountList.get(0),allAccountList.get(1),allAccountList.get(2)};
         JDialog popup = new JDialog(parent, "Transfer Between Accounts", true);
-        popup.setSize(400, 300);
+        popup.setSize(400, 400);
         popup.setLayout(new GridBagLayout());
         popup.setLocationRelativeTo(parent);
 
@@ -49,7 +63,7 @@ public class AccountTransferPopup {
         gbc.gridy = 0;
         popup.add(fromAccountLabel, gbc);
 
-        JComboBox<String> fromAccountComboBox = new JComboBox<>(new String[]{"Item1", "Item2"});
+        JComboBox<String> fromAccountComboBox = new JComboBox<>(accountListCB);
         gbc.gridx = 1;
         gbc.gridy = 0;
         popup.add(fromAccountComboBox, gbc);
@@ -60,7 +74,7 @@ public class AccountTransferPopup {
         gbc.gridy = 1;
         popup.add(toAccountLabel, gbc);
 
-        JComboBox<String> toAccountComboBox = new JComboBox<>(new String[]{"Item1", "Item2"});
+        JComboBox<String> toAccountComboBox = new JComboBox<>(accountListCB);
         gbc.gridx = 1;
         gbc.gridy = 1;
         popup.add(toAccountComboBox, gbc);
@@ -76,10 +90,32 @@ public class AccountTransferPopup {
         gbc.gridy = 2;
         popup.add(balanceField, gbc);
 
+        // Description
+        JLabel descriptionLabel = new JLabel("Description:");
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        popup.add(descriptionLabel, gbc);
+
+        JTextField descriptionField = new JTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        popup.add(descriptionField, gbc);
+
+        // Reference
+        JLabel referenceLabel = new JLabel("Reference (Optional):");
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        popup.add(referenceLabel, gbc);
+
+        JTextField referenceField = new JTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        popup.add(referenceField, gbc);
+
         // Confirm Transfer Button
         JButton confirmButton = new JButton("Confirm Transfer");
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 5;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         popup.add(confirmButton, gbc);
@@ -89,10 +125,12 @@ public class AccountTransferPopup {
             String fromAccount = (String) fromAccountComboBox.getSelectedItem();
             String toAccount = (String) toAccountComboBox.getSelectedItem();
             String balance = balanceField.getText();
+            String description = descriptionField.getText();
+            String reference = referenceField.getText();
 
             // Validate the input
-            if (fromAccount == null || toAccount == null || balance.isEmpty()) {
-                JOptionPane.showMessageDialog(popup, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (fromAccount == null || toAccount == null || balance.isEmpty() || description.isEmpty()) {
+                JOptionPane.showMessageDialog(popup, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -106,13 +144,30 @@ public class AccountTransferPopup {
                 if (amount <= 0) {
                     throw new NumberFormatException();
                 }
-
+                String fromAccountNumber = fromAccount.split("/")[1];
+                String toAccountNumber = toAccount.split("/")[1];
                 // Show confirmation dialog
-                JOptionPane.showMessageDialog(popup,
-                        "Transfer confirmed:\nFrom: " + fromAccount + "\nTo: " + toAccount + "\nAmount: $" + amount,
-                        "Success", JOptionPane.INFORMATION_MESSAGE);
+                int confirmationResponse = JOptionPane.showConfirmDialog(popup,
+                        "Transfer confirmed:\n" +
+                                "From: " + fromAccountNumber + "\n" +
+                                "To: " + toAccountNumber + "\n" +
+                                "Amount: $" + amount + "\n" +
+                                "Description: " + description + "\n" +
+                                (reference.isEmpty() ? "" : "Reference: " + reference),
+                        "Success", JOptionPane.OK_CANCEL_OPTION);
+                if(confirmationResponse == JOptionPane.OK_OPTION) {
+                    int userId = Session.getSession().getLoggedInUser().getUserId();
+                    TransactionController transactionController = BaseApp.getTransactionController();
+                    boolean result = transactionController.transfer(fromAccountNumber, toAccountNumber, amount, userId, description, reference.isEmpty() ? "" : reference);
+                    if(result){
+                        JOptionPane.showMessageDialog(popup, "You payment is successful.","Payment Success",JOptionPane.INFORMATION_MESSAGE);
+                        popup.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(popup, "You payment was failed.","Payment Failed",JOptionPane.ERROR);
 
-                popup.dispose(); // Close the popup
+                    }
+                }
+                // popup.dispose(); // Close the popup
 
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(popup, "Please enter a valid balance.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -121,5 +176,42 @@ public class AccountTransferPopup {
 
         popup.setVisible(true);
     }
-}
 
+    void fetchedALlUserActiveAccount(){
+        User user = Session.getSession().getLoggedInUser();
+        AccountController accountController = BaseApp.getAccountController();
+        accountList = accountController.getAllActiveUserAccount(user.getUserId())
+                .stream()
+                .filter(account -> (AccountType.NORMAL.name().equalsIgnoreCase(account.getAccountType()) || AccountType.SAVER.name().equalsIgnoreCase(account.getAccountType())))
+                .collect(Collectors.toList());
+        
+        Account loanAccount = accountController.getAllUserAccount(user.getUserId())
+                .stream()
+                .filter(account -> (AccountType.LOAN.name().equalsIgnoreCase(account.getAccountType())))
+                .collect(Collectors.toList()).getFirst();
+        
+        
+        if(loanAccount != null){
+            if(loanAccount.getStatus().equalsIgnoreCase(AccountStatus.ACTIVE.name())) {
+                allAccountList.add(String.format("%s/%s", loanAccount.getAccountType(),loanAccount.getAccountNumber()));
+            }  
+        } 
+        if(!accountList.isEmpty()){
+            Account normalAccount = accountList.stream()
+            .filter(account -> AccountType.NORMAL.name().equalsIgnoreCase(account.getAccountType()))
+            .collect(Collectors.toList()).getFirst();
+            
+            
+            Account saverAccount = accountList.stream()
+            .filter(account -> AccountType.SAVER.name().equalsIgnoreCase(account.getAccountType()))
+            .collect(Collectors.toList()).getFirst();
+            
+            allAccountList.add(String.format("%s/%s", normalAccount.getAccountType(),normalAccount.getAccountNumber()));
+            allAccountList.add(String.format("%s/%s", saverAccount.getAccountType(),saverAccount.getAccountNumber()));
+        }
+        System.out.println(allAccountList+"<---");
+    }
+
+
+
+}

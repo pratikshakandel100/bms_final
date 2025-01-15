@@ -24,6 +24,10 @@ import javax.swing.JOptionPane;
  */
 public class AccountListScreen extends javax.swing.JFrame {
 
+    private Account normalAccount;
+    private Account saverAccount;
+    private Account loanAccount;
+
     /**
      * Creates new form AccountListScreen
      */
@@ -41,6 +45,10 @@ public class AccountListScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        headerPanel = new javax.swing.JPanel();
+        pInfotitle1 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        lblName = new javax.swing.JLabel();
         infoPanel = new javax.swing.JPanel();
         pInfotitle = new javax.swing.JLabel();
         pInfoLabel = new javax.swing.JLabel();
@@ -66,7 +74,6 @@ public class AccountListScreen extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         lblBalanceS = new javax.swing.JLabel();
         loanAccountPannel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -77,22 +84,63 @@ public class AccountListScreen extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         lblBalanceL = new javax.swing.JLabel();
         requestLoanAccountPanel = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(700, 510));
-        setMinimumSize(new java.awt.Dimension(700, 510));
-        setPreferredSize(new java.awt.Dimension(700, 510));
+        setPreferredSize(new java.awt.Dimension(650, 510));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
         });
 
-        jPanel1.setMaximumSize(new java.awt.Dimension(1000, 510));
-        jPanel1.setPreferredSize(new java.awt.Dimension(900, 510));
+        jPanel1.setBackground(new java.awt.Color(51, 255, 204));
+        jPanel1.setPreferredSize(new java.awt.Dimension(650, 510));
+
+        headerPanel.setBackground(new java.awt.Color(153, 255, 255));
+        headerPanel.setName("RequestBankAccountPannel"); // NOI18N
+
+        pInfotitle1.setFont(new java.awt.Font("Segoe UI Semibold", 3, 18)); // NOI18N
+        pInfotitle1.setForeground(new java.awt.Color(0, 0, 204));
+        pInfotitle1.setText("BANK MANAGEMENT SYSTEM");
+
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel21.setText("X");
+        jLabel21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel21onCloseMessageInfo(evt);
+            }
+        });
+
+        lblName.setFont(new java.awt.Font("Segoe UI Semilight", 3, 12)); // NOI18N
+        lblName.setForeground(new java.awt.Color(0, 0, 204));
+        lblName.setText("Admin V");
+
+        javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
+        headerPanel.setLayout(headerPanelLayout);
+        headerPanelLayout.setHorizontalGroup(
+            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerPanelLayout.createSequentialGroup()
+                .addGap(132, 132, 132)
+                .addComponent(pInfotitle1)
+                .addGap(102, 102, 102)
+                .addComponent(jLabel21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblName)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        headerPanelLayout.setVerticalGroup(
+            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pInfotitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel21)
+                    .addComponent(lblName))
+                .addContainerGap())
+        );
 
         infoPanel.setBackground(new java.awt.Color(255, 255, 255));
         infoPanel.setName("RequestBankAccountPannel"); // NOI18N
@@ -131,20 +179,19 @@ public class AccountListScreen extends javax.swing.JFrame {
         infoPanelLayout.setVerticalGroup(
             infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(infoPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(pInfotitle)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pInfoLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pInfoLabel))
         );
 
         accountPanel.setBackground(new java.awt.Color(255, 255, 255));
-        accountPanel.setPreferredSize(new java.awt.Dimension(300, 160));
+        accountPanel.setPreferredSize(new java.awt.Dimension(300, 100));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setText("Your Accounts");
+        jLabel1.setText("Your Bank Accounts");
 
         jPanel4.setBackground(new java.awt.Color(153, 255, 204));
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -159,7 +206,7 @@ public class AccountListScreen extends javax.swing.JFrame {
 
         jLabel10.setText("Amount:");
 
-        lblACNumN.setText("1234567890");
+        lblACNumN.setText("1234567890123456");
 
         lblAccNameN.setText("Kiran Kumar");
 
@@ -195,7 +242,7 @@ public class AccountListScreen extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblACNumN)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,8 +260,9 @@ public class AccountListScreen extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(jLabel16)
                     .addComponent(lblBalanceN))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addComponent(lblACTypeN))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblACTypeN)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(153, 255, 153));
@@ -230,7 +278,7 @@ public class AccountListScreen extends javax.swing.JFrame {
 
         jLabel12.setText("Amount:");
 
-        lblACNumS.setText("1234567890S");
+        lblACNumS.setText("12345678901234S");
 
         lblAccNameS.setText("Kiran Kumar");
 
@@ -266,7 +314,7 @@ public class AccountListScreen extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblACNumS)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,8 +332,9 @@ public class AccountListScreen extends javax.swing.JFrame {
                     .addComponent(jLabel12)
                     .addComponent(jLabel18)
                     .addComponent(lblBalanceS))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addComponent(lblACTypeS))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblACTypeS)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout accountPanelLayout = new javax.swing.GroupLayout(accountPanel);
@@ -293,36 +342,28 @@ public class AccountListScreen extends javax.swing.JFrame {
         accountPanelLayout.setHorizontalGroup(
             accountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accountPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(accountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(accountPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(accountPanelLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         accountPanelLayout.setVerticalGroup(
             accountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accountPanelLayout.createSequentialGroup()
-                .addGroup(accountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(accountPanelLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(accountPanelLayout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(accountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         loanAccountPannel.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("Loan Accounts");
+        loanAccountPannel.setPreferredSize(new java.awt.Dimension(300, 100));
 
         jPanel6.setBackground(new java.awt.Color(204, 204, 255));
         jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -337,7 +378,7 @@ public class AccountListScreen extends javax.swing.JFrame {
 
         jLabel19.setText("Amount:");
 
-        lblACNumL.setText("1234567890L");
+        lblACNumL.setText("12345678901234L");
 
         lblAccNameL.setText("Kiran Kumar");
 
@@ -373,7 +414,7 @@ public class AccountListScreen extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblACNumL)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,40 +432,13 @@ public class AccountListScreen extends javax.swing.JFrame {
                     .addComponent(jLabel19)
                     .addComponent(jLabel20)
                     .addComponent(lblBalanceL))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblACTypeL))
-        );
-
-        javax.swing.GroupLayout loanAccountPannelLayout = new javax.swing.GroupLayout(loanAccountPannel);
-        loanAccountPannel.setLayout(loanAccountPannelLayout);
-        loanAccountPannelLayout.setHorizontalGroup(
-            loanAccountPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loanAccountPannelLayout.createSequentialGroup()
-                .addGroup(loanAccountPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(loanAccountPannelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(loanAccountPannelLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        loanAccountPannelLayout.setVerticalGroup(
-            loanAccountPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loanAccountPannelLayout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
         );
 
         requestLoanAccountPanel.setBackground(new java.awt.Color(255, 255, 255));
         requestLoanAccountPanel.setName("RequestBankAccountPannel"); // NOI18N
         requestLoanAccountPanel.setPreferredSize(new java.awt.Dimension(300, 55));
-
-        jLabel17.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel17.setText("Your Loan Accounts");
 
         jLabel14.setText("Request to open a loan account?");
 
@@ -442,63 +456,84 @@ public class AccountListScreen extends javax.swing.JFrame {
             requestLoanAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(requestLoanAccountPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(requestLoanAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17)
-                    .addGroup(requestLoanAccountPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel15)))
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel15)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         requestLoanAccountPanelLayout.setVerticalGroup(
             requestLoanAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(requestLoanAccountPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(requestLoanAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(jLabel15))
                 .addContainerGap())
         );
 
+        jLabel17.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel17.setText("Your Loan Accounts");
+
+        javax.swing.GroupLayout loanAccountPannelLayout = new javax.swing.GroupLayout(loanAccountPannel);
+        loanAccountPannel.setLayout(loanAccountPannelLayout);
+        loanAccountPannelLayout.setHorizontalGroup(
+            loanAccountPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loanAccountPannelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(loanAccountPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(loanAccountPannelLayout.createSequentialGroup()
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(425, 425, 425))
+                    .addGroup(loanAccountPannelLayout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(loanAccountPannelLayout.createSequentialGroup()
+                        .addComponent(requestLoanAccountPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
+                        .addContainerGap())))
+        );
+        loanAccountPannelLayout.setVerticalGroup(
+            loanAccountPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loanAccountPannelLayout.createSequentialGroup()
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(requestLoanAccountPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(accountPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
-                    .addComponent(loanAccountPannel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(infoPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(requestLoanAccountPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+            .addComponent(infoPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(accountPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
+            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(loanAccountPannel, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(accountPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(loanAccountPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(accountPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(requestLoanAccountPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addComponent(loanAccountPannel, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -523,26 +558,32 @@ public class AccountListScreen extends javax.swing.JFrame {
 
     private void onClickNormalAccount(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onClickNormalAccount
         // TODO add your handling code here:
-        new UnishaDashboardPage().setVisible(true);
+        new AccountDetailScreen(normalAccount.getAccountId()).setVisible(true);
+        
     }//GEN-LAST:event_onClickNormalAccount
 
     private void onClickSaverAccount(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onClickSaverAccount
         // TODO add your handling code here:
-        new UnishaDashboardPage().setVisible(true);
+        new AccountDetailScreen(saverAccount.getAccountId()).setVisible(true);
+        
     }//GEN-LAST:event_onClickSaverAccount
 
     private void onClickLoanAccount(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onClickLoanAccount
         // TODO add your handling code here:
+        new AccountDetailScreen(loanAccount.getAccountId()).setVisible(true);
     }//GEN-LAST:event_onClickLoanAccount
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
+        User LoggedInUser = Session.getSession().getLoggedInUser();
+        
         infoPanel.setVisible(false);
         accountPanel.setVisible(false);
         loanAccountPannel.setVisible(false);
         requestLoanAccountPanel.setVisible(false);
-        User LoggedInUser = Session.getSession().getLoggedInUser();
         
+        String firstName = LoggedInUser.getName().split(" ")[0];
+        lblName.setText(firstName);
         // get ALl user Active Account
         fetchedALlUserActiveAccount(LoggedInUser);
     }//GEN-LAST:event_formWindowOpened
@@ -552,6 +593,10 @@ public class AccountListScreen extends javax.swing.JFrame {
         infoPanel.setVisible(false);
     }//GEN-LAST:event_jLabel8onCloseMessageInfo
 
+    private void jLabel21onCloseMessageInfo(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21onCloseMessageInfo
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel21onCloseMessageInfo
+
     void fetchedALlUserActiveAccount(User user){
         AccountController accountController = BaseApp.getAccountController();
                 List<Account> accountList = accountController.getAllActiveUserAccount(user.getUserId())
@@ -559,7 +604,7 @@ public class AccountListScreen extends javax.swing.JFrame {
                 .filter(account -> (AccountType.NORMAL.name().equalsIgnoreCase(account.getAccountType()) || AccountType.SAVER.name().equalsIgnoreCase(account.getAccountType())))
                 .collect(Collectors.toList());
         
-        Account loanAccount = accountController.getAllUserAccount(user.getUserId())
+        loanAccount = accountController.getAllUserAccount(user.getUserId())
                 .stream()
                 .filter(account -> (AccountType.LOAN.name().equalsIgnoreCase(account.getAccountType())))
                 .collect(Collectors.toList()).getFirst();
@@ -579,12 +624,12 @@ public class AccountListScreen extends javax.swing.JFrame {
             requestLoanAccountPanel.setVisible(true);
         }
         if(!accountList.isEmpty()){
-            Account normalAccount = accountList.stream()
+            normalAccount = accountList.stream()
                 .filter(account -> AccountType.NORMAL.name().equalsIgnoreCase(account.getAccountType()))
                 .collect(Collectors.toList()).getFirst();
             
             
-            Account saverAccount = accountList.stream()
+            saverAccount = accountList.stream()
                 .filter(account -> AccountType.SAVER.name().equalsIgnoreCase(account.getAccountType()))
                 .collect(Collectors.toList()).getFirst();
             
@@ -666,6 +711,7 @@ public class AccountListScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel accountPanel;
+    private javax.swing.JPanel headerPanel;
     private javax.swing.JPanel infoPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -678,8 +724,8 @@ public class AccountListScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -701,9 +747,11 @@ public class AccountListScreen extends javax.swing.JFrame {
     private javax.swing.JLabel lblBalanceL;
     private javax.swing.JLabel lblBalanceN;
     private javax.swing.JLabel lblBalanceS;
+    private javax.swing.JLabel lblName;
     private javax.swing.JPanel loanAccountPannel;
     private javax.swing.JLabel pInfoLabel;
     private javax.swing.JLabel pInfotitle;
+    private javax.swing.JLabel pInfotitle1;
     private javax.swing.JPanel requestLoanAccountPanel;
     // End of variables declaration//GEN-END:variables
 }
