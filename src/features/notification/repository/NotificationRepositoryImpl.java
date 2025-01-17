@@ -21,8 +21,8 @@ public class NotificationRepositoryImpl implements NotificationRepository {
     }
 
     @Override
-    public void markNotificationAsSeen(int userId){
-        String updateNotificationStatusQuery = NotificationQueryManager.updateNotificatonStatusQuery(userId);
+    public void markNotificationAsSeen(int notificationId){
+        String updateNotificationStatusQuery = NotificationQueryManager.updateNotificatonStatusQuery(notificationId);
         dbConnection.executeOnly(updateNotificationStatusQuery);
     }
 

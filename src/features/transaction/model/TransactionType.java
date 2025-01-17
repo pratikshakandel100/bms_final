@@ -1,7 +1,8 @@
 package features.transaction.model;
 
 public enum TransactionType {
-    WITHDRAW,
-    DEPOSIT,
-    TRANSFER  
+    ATM_WITHDRAW,
+    ATM_DEPOSIT,
+    TRANSFER,
+    PAYMENT,
 }

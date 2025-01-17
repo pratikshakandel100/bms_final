@@ -12,20 +12,24 @@ public class TransactionController {
         this.transactionUsecase = transactionUsecase;
     }
 
-    public boolean deposit(String accountNumber, double amount, int userId, String description, String references) {
-        return transactionUsecase.deposit(accountNumber, amount, userId, description, references);
+    public boolean paySomeone(String fromAccountNumber, String toAccountNumber, double amount, String description, String references) {
+        return transactionUsecase.paySomeone(fromAccountNumber,toAccountNumber,amount, description, references);
+    }
+    
+    public String atmDeposit(String accountNumber, double amount, String description, String references) {
+        return transactionUsecase.atmDeposit(accountNumber, amount,description, references);
     }
 
-    public boolean withdraw(String accountNumber, double amount, int userId, String description, String references){
-        return transactionUsecase.withdraw(accountNumber, amount, userId, description, references);   
+    public String atmWithdraw(String accountNumber, double amount, String description, String references){
+        return transactionUsecase.atmWithdraw(accountNumber, amount, description, references);   
     }
 
-    public boolean transfer(String fromAccountNumber, String toAccountNumber, double amount, int userId, String description, String references) {
-        return transactionUsecase.transfer(fromAccountNumber, toAccountNumber, amount, userId, description, references);
+    public boolean transferBetweenAccount(String fromAccountNumber, String toAccountNumber, double amount, String description, String references) {
+        return transactionUsecase.transferBetweenAccount(fromAccountNumber, toAccountNumber, amount, description, references);
     }
 
-    public List<Transaction> getAllUserTransaction(int userId,int accountId) {
-        return transactionUsecase.getAllUserTransaction(userId, accountId);
+    public List<Transaction> getAllUserTransaction(int accountId) {
+        return transactionUsecase.getAllUserTransaction(accountId);
     }
     
 }

@@ -13,20 +13,24 @@ public class TransactionUsecase {
     }
 
 
-    public boolean deposit(String accountNumber, double amount, int userId, String description, String references) {
-        return transactionRepository.deposit(accountNumber, amount, userId, description, references);
+    public boolean paySomeone(String fromAccountNumber, String toAccountNumber, double amount, String description, String references) {
+        return transactionRepository.paySomeone(fromAccountNumber,toAccountNumber,amount, description, references);
+    }
+    
+    public String atmDeposit(String accountNumber, double amount, String description, String references) {
+        return transactionRepository.atmDeposit(accountNumber, amount,description, references);
     }
 
-    public boolean withdraw(String accountNumber, double amount, int userId, String description, String references){
-        return transactionRepository.withdraw(accountNumber, amount, userId, description, references);   
+    public String atmWithdraw(String accountNumber, double amount,String description, String references){
+        return transactionRepository.atmWithdraw(accountNumber, amount, description, references);   
     }
 
-    public boolean transfer(String fromAccountNumber, String toAccountNumber, double amount, int userId, String description, String references) {
-        return transactionRepository.transfer(fromAccountNumber, toAccountNumber, amount, userId, description, references);
+    public boolean transferBetweenAccount(String fromAccountNumber, String toAccountNumber, double amount, String description, String references) {
+        return transactionRepository.transferBetweenAccount(fromAccountNumber, toAccountNumber, amount, description, references);
     }
 
-    public List<Transaction> getAllUserTransaction(int userId,int accountId) {
-        return transactionRepository.getAllUserTransaction(userId, accountId);
+    public List<Transaction> getAllUserTransaction(int accountId) {
+        return transactionRepository.getAllUserTransaction(accountId);
     }
     
 }

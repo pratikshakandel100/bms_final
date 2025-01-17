@@ -7,4 +7,5 @@ public interface UserRepository {
     public User loginUser(String email, String password);
     public void updateUserPoints(int points, int userId);
     public User getUserDetails(int userId);
+    public 
 }

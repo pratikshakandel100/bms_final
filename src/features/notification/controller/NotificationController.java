@@ -16,8 +16,12 @@ public class NotificationController {
         return notificationUsecase.createNotification(userId, title, message);
     }
 
-    public void markNotificationAsSeen(int userId){
-        notificationUsecase.markNotificationAsSeen(userId);
+    public void markNotificationAsSeen(int notificationId){
+        notificationUsecase.markNotificationAsSeen(notificationId);
+    }
+    
+    public void deleteNotification(int notificationId){
+        notificationUsecase.deleteNotification(notificationId);
     }
     
     public List<Notification> getAllUserNotification(int userId){

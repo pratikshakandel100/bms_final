@@ -6,6 +6,7 @@ import features.account.model.Account;
 import features.account.view.screens.AccountListScreen;
 import features.auth.controller.UserController;
 import features.auth.model.User;
+import features.auth.model.UserType;
 import features.kyc.model.KYCDetails;
 import features.kyc.view.KYCScreen;
 import java.util.List;
@@ -267,7 +268,7 @@ public class LoginScreen extends javax.swing.JFrame {
     try {
         UserController userController = BaseApp.getUserController();
         User user = userController.loginUser(email, password);
-        if (user != null) {
+        if (user != null && user.getRole().equalsIgnoreCase(UserType.USER.name())) {
             // Set the user in the session
             Session currentSession = Session.getSession();
             currentSession.setUserToSession(user);
@@ -279,14 +280,26 @@ public class LoginScreen extends javax.swing.JFrame {
                 // Open AccountScreen and close LoginScreen
                 int userId = Session.getSession().getLoggedInUser().getUserId();
                 KYCDetails kycDetails = BaseApp.getKycController().getKYCDetailsFromUserId(String.valueOf(userId));
-                List<Account> accountList = BaseApp.getAccountController().getAllInactiveUserAccount(userId);
+                List<Account> accountList = BaseApp.getAccountController().getAllActiveUserAccount(userId);
                 if(kycDetails == null){
                     new KYCScreen().setVisible(true);
-                } if(accountList == null || accountList.isEmpty()){
-                    new Dashboard().setVisible(true);
+                }else if(accountList == null || accountList.isEmpty()){
+                    new UserDashboard().setVisible(true);
                 }else {
                     new AccountListScreen().setVisible(true);
                 }
+                dispose();
+            }
+        } else if (user != null && user.getRole().equalsIgnoreCase(UserType.ADMIN.name())) {
+             // Set the user in the session
+            Session currentSession = Session.getSession();
+            currentSession.setUserToSession(user);
+
+            // Show success message
+            int response = JOptionPane.showConfirmDialog(this, "Admin Login successful!", "Admin Login Success", JOptionPane.OK_CANCEL_OPTION);
+
+            if (response == JOptionPane.OK_OPTION) {
+                new AdminDashboard().setVisible(true);
                 dispose();
             }
         } else {

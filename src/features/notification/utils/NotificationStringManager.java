@@ -13,6 +13,14 @@ public class NotificationStringManager {
     // Amount withdraw Notifications
     public static final String AMOUNT_WITHDRAW_TITLE = "Amount Withdraw";
     public static final String AMOUNT_WITHDRAW_MESSAGE = "You have withdraw Rs.%s for `%s`.";
+    
+    // ATM Withdraw
+    public static final String ATM_WITHDRAW_TITLE = "ATM Withdraw";
+    public static final String ATM_WITHDRAW_MESSAGE = "You ATM withdraw code is %s.";
+    
+    // ATM Deposit
+    public static final String ATM_DEPOSIT_TITLE = "ATM Deposit";
+    public static final String ATM_DEPOSIT_MESSAGE = "You ATM Deposit code is %s.";
 
     // Payment Notifications
     public static final String PAYMENT_SENT_TITLE = "Payment Sent";

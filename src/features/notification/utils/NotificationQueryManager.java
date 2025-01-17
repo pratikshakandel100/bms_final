@@ -14,9 +14,9 @@ public class NotificationQueryManager {
     }
 
     // update notification status (markNotificationAsSeen) --> int userId
-    public static String updateNotificatonStatusQuery(int userId ){
-        String template = "update {notification_table} set isSeen= TRUE where userId = {userId}";
-        Map<String,String> values = Map.of("notification_table", notification_table, "userId", Integer.toString(userId) );
+    public static String updateNotificatonStatusQuery(int notificationId ){
+        String template = "update {notification_table} set isSeen= !isSeen where notificationId = {notificationId}";
+        Map<String,String> values = Map.of("notification_table", notification_table, "notificationId", Integer.toString(notificationId) );
         return CustomFormatter.format(template, values); 
     }
 

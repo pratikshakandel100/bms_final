@@ -31,8 +31,8 @@ public class UserRepositoryImpl implements UserRepository{
             e.printStackTrace();
         }  
         return null;
-    }
-
+    }    
+    
     @Override
     public boolean registerUser(User user) {
         // dbConnection = new DbConnection();
@@ -48,7 +48,6 @@ public class UserRepositoryImpl implements UserRepository{
             String loginQuery = UserQueryManager.loginQuery(email, password);
             ResultSet result = dbConnection.executeWithResult(loginQuery);
             if (result.next()) {
-                System.out.println(result.getDate("dob"));
                 // User user = new User();
                 // user.setUserId(result.getInt("userId"));
                 // user.setName(result.getString("name"));

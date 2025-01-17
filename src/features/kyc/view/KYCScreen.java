@@ -9,7 +9,7 @@ import core.CustomDateFormatter;
 import core.MessageStringManager;
 import core.Session;
 import features.auth.model.User;
-import features.auth.view.Dashboard;
+import features.auth.view.UserDashboard;
 import features.kyc.model.IdentityType;
 import features.kyc.model.KYCDetails;
 import features.message.controller.MessageController;
@@ -164,7 +164,7 @@ public class KYCScreen extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -175,13 +175,13 @@ public class KYCScreen extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(nameLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(nameLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(lblEmail)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(lblDob1))
                                     .addComponent(personalinformationLabel))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 44, Short.MAX_VALUE))
+                                .addGap(44, 44, 44))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(rdoDL)
@@ -303,15 +303,15 @@ public class KYCScreen extends javax.swing.JFrame {
         new MessageController().saveUserMessage(message,MessageType.KYC);
         if (response == JOptionPane.OK_OPTION) {
                     // Open LoginScreen and close RegisterScreen
-                    new Dashboard().setVisible(true);
+                    new UserDashboard().setVisible(true);
                     dispose();
             }
         }
     } catch(Exception ex){
     ex.printStackTrace();
     }
-    String issueDateFormatted = CustomDateFormatter.convertPickedToDateAndFormatted(tfIdentityIssueDate.getDate().toString());
-        System.out.println(issueDateFormatted);
+//    String issueDateFormatted = CustomDateFormatter.convertPickedToDateAndFormatted(tfIdentityIssueDate.getDate().toString());
+//        System.out.println(issueDateFormatted);
         
     }//GEN-LAST:event_btnSubmitActionPerformed
 

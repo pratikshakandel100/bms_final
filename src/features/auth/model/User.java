@@ -9,12 +9,13 @@ public class User {
     private String phone;
     private Date dob;
     private int points;
+    private String role;
 
     public User(){
         
     }
     // Public constructor
-    public User(int userId, String name, String email, String password, String phone, Date dob, int points) {
+    public User(int userId, String name, String email, String password, String phone, Date dob, int points,String role) {
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -22,6 +23,7 @@ public class User {
         this.phone = phone;
         this.dob = dob;
         this.points = points;
+        this.role = role;
     }
 
     // Getters and setters
@@ -79,6 +81,14 @@ public class User {
 
     public void setPoints(int points) {
         this.points = points;
-    }   
+    }
+    
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
 }
 
