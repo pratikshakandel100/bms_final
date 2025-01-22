@@ -158,7 +158,7 @@ public class AccountTransferPopup {
                 if(confirmationResponse == JOptionPane.OK_OPTION) {
                     int userId = Session.getSession().getLoggedInUser().getUserId();
                     TransactionController transactionController = BaseApp.getTransactionController();
-                    boolean result = transactionController.transfer(fromAccountNumber, toAccountNumber, amount, userId, description, reference.isEmpty() ? "" : reference);
+                    boolean result = transactionController.transferBetweenAccount(fromAccountNumber, toAccountNumber, amount, description, reference.isEmpty() ? "" : reference);
                     if(result){
                         JOptionPane.showMessageDialog(popup, "You payment is successful.","Payment Success",JOptionPane.INFORMATION_MESSAGE);
                         popup.dispose();

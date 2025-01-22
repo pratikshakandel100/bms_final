@@ -15,7 +15,6 @@ import features.auth.model.User;
 import features.message.controller.MessageController;
 import features.message.model.MessageInfo;
 import features.message.model.MessageType;
-import features.notification.model.Notification;
 import features.notification.view.NotificationPopup;
 import java.util.List;
 import java.util.stream.Collectors;

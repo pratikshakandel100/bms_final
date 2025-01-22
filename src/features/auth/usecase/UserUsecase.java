@@ -2,6 +2,7 @@ package features.auth.usecase;
 
 import features.auth.model.User;
 import features.auth.repository.UserRepository;
+import java.util.List;
 
 public class UserUsecase {
     private UserRepository userRepository;
@@ -25,4 +26,13 @@ public class UserUsecase {
     public void updateUserPoints(int points, int userId){
         userRepository.updateUserPoints(points, userId);
     }
+    
+    public List<User> getAllUser() {
+        return userRepository.getAllUser();
+    }
+    
+    public boolean updateUserDetail(User user) {
+        return userRepository.updateUserDetail(user);
+    }
+    
 }

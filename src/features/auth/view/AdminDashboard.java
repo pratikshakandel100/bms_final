@@ -6,6 +6,8 @@ package features.auth.view;
 
 import core.Session;
 import features.auth.model.User;
+import features.kyc.view.GetAllKYC;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,6 +35,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         headerPanel = new javax.swing.JPanel();
         pInfotitle1 = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
+        lblLogout = new javax.swing.JLabel();
         menuPanel = new javax.swing.JPanel();
         pInfotitle2 = new javax.swing.JLabel();
         pInfotitle3 = new javax.swing.JLabel();
@@ -57,24 +60,37 @@ public class AdminDashboard extends javax.swing.JFrame {
         lblName.setForeground(new java.awt.Color(0, 0, 204));
         lblName.setText("Admin");
 
+        lblLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-logout-21.png"))); // NOI18N
+        lblLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                onLogoutClick(evt);
+            }
+        });
+
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
         headerPanelLayout.setHorizontalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(191, Short.MAX_VALUE)
                 .addComponent(pInfotitle1)
-                .addGap(131, 131, 131)
+                .addGap(119, 119, 119)
                 .addComponent(lblName)
-                .addGap(28, 28, 28))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblLogout)
+                .addContainerGap())
         );
         headerPanelLayout.setVerticalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
+            .addGroup(headerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pInfotitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblName))
+                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(pInfotitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblLogout))
+                    .addGroup(headerPanelLayout.createSequentialGroup()
+                        .addComponent(lblName)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -84,6 +100,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         pInfotitle2.setFont(new java.awt.Font("Segoe UI Semibold", 3, 18)); // NOI18N
         pInfotitle2.setForeground(new java.awt.Color(255, 51, 51));
         pInfotitle2.setText("KYC");
+        pInfotitle2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                onKYCClick(evt);
+            }
+        });
 
         pInfotitle3.setFont(new java.awt.Font("Segoe UI Semibold", 3, 18)); // NOI18N
         pInfotitle3.setForeground(new java.awt.Color(255, 51, 51));
@@ -96,6 +117,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         pInfotitle4.setFont(new java.awt.Font("Segoe UI Semibold", 3, 18)); // NOI18N
         pInfotitle4.setForeground(new java.awt.Color(255, 51, 51));
         pInfotitle4.setText("USERS");
+        pInfotitle4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                onUserClick(evt);
+            }
+        });
 
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
@@ -160,6 +186,26 @@ public class AdminDashboard extends javax.swing.JFrame {
         lblName.setText(loggedInUser.getName());
     }//GEN-LAST:event_formWindowOpened
 
+    private void onUserClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onUserClick
+        // TODO add your handling code here:
+        new GetAllUser().setVisible(true);
+    }//GEN-LAST:event_onUserClick
+
+    private void onKYCClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onKYCClick
+        // TODO add your handling code here:
+        new GetAllKYC().setVisible(true);
+    }//GEN-LAST:event_onKYCClick
+
+    private void onLogoutClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onLogoutClick
+        // TODO add your handling code here:
+        int response = JOptionPane.showConfirmDialog(this, "Do you want to Logout now?", "Log out", JOptionPane.OK_CANCEL_OPTION);
+        if (response == JOptionPane.OK_OPTION) {
+            Session.getSession().stopSession();
+            new LoginScreen().setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_onLogoutClick
+
     /**
      * @param args the command line arguments
      */
@@ -198,6 +244,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel headerPanel;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblLogout;
     private javax.swing.JLabel lblName;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JLabel pInfotitle1;

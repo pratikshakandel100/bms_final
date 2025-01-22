@@ -1,13 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package features.auth.view;
 
 import core.BaseApp;
 import features.auth.controller.UserController;
 import features.auth.model.User;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -53,9 +53,8 @@ public class GetAllUser extends javax.swing.JFrame {
         lblUserId = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         tfSearch = new javax.swing.JTextField();
-        btnSearch = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -100,6 +99,8 @@ public class GetAllUser extends javax.swing.JFrame {
         jLabel1.setText("Full Name:");
 
         tfFullName.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+
+        jSeparator1.setForeground(new java.awt.Color(255, 255, 51));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel2.setText("User Information");
@@ -150,7 +151,11 @@ public class GetAllUser extends javax.swing.JFrame {
         ));
         tblUser.setGridColor(new java.awt.Color(51, 51, 255));
         tblUser.setShowGrid(true);
-        tblUser.setShowHorizontalLines(true);
+        tblUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                onSelectRow(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblUser);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
@@ -163,12 +168,9 @@ public class GetAllUser extends javax.swing.JFrame {
         jLabel8.setText("Search");
 
         tfSearch.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-
-        btnSearch.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
-        btnSearch.setText("Search");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+        tfSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfSearchKeyReleased(evt);
             }
         });
 
@@ -178,57 +180,52 @@ public class GetAllUser extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2))
+                        .addGap(169, 169, 169)
+                        .addComponent(btnUpdate)
+                        .addGap(62, 62, 62)
+                        .addComponent(btnDelete))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tfPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tfFullName, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(75, 75, 75)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tfPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(tfFullName, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(75, 75, 75)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(tfPoints, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
+                                .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblUserId))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(169, 169, 169)
-                                .addComponent(btnUpdate)
-                                .addGap(62, 62, 62)
-                                .addComponent(btnDelete)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tfPoints, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSearch))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12))
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblUserId)))
+                .addContainerGap(197, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,12 +259,9 @@ public class GetAllUser extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btnUpdate)
                                     .addComponent(btnDelete)))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSearch)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -289,21 +283,134 @@ public class GetAllUser extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
+        UserController uc = BaseApp.getUserController();
+        if(tblUser.getSelectedRowCount()==1){
+            int selectedRow = tblUser.getSelectedRow();
+            String userId = tblUser.getValueAt(selectedRow, 0).toString();
+            String fullName = tfFullName.getText();
+            String email = tfEmail.getText();
+            String phone = tfPhone.getText();
+            String point = tfPoints.getText();
+            
+            User newUser  = new User();
+            newUser.setUserId(Integer.parseInt(userId));
+            newUser.setName(fullName);
+            newUser.setEmail(email);
+            newUser.setPhone(phone);
+            newUser.setPoints(Integer.parseInt(point));
+            
+            boolean result = uc.updateUserDetail(newUser);
+
+            if(result){
+                JOptionPane.showMessageDialog(this, "User Detail are up-to-date now");
+                tblUser.repaint();
+                tblUser.validate();
+                getAllUserTableData();
+                lblUserId.setText("");
+                tfEmail.setText("");
+                tfFullName.setText("");
+                tfPhone.setText("");
+                tfPoints.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to update user Detail");
+            }
+        } else {
+        if(tblUser.getRowCount() == 0){
+            JOptionPane.showMessageDialog(this, "Table is Empty");
+        } else {
+            JOptionPane.showMessageDialog(this, "Please Select Single row for update");
+           }
+        } 
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel userTable = (DefaultTableModel) tblUser.getModel();
+        if(tblUser.getSelectedRowCount()==1){
+            int selectedRow = tblUser.getSelectedRow();
+//            String userId = tblUser.getValueAt(selectedRow, 0).toString();
+            //TODO: delete user logic
+            JOptionPane.showMessageDialog(this, "Close the bank Account First");
+//            userTable.removeRow(tblUser.getSelectedRow());
+        } else {
+        if(tblUser.getRowCount() == 0){
+            JOptionPane.showMessageDialog(this, "Table is Empty");
+            } else {
+            JOptionPane.showMessageDialog(this, "Please Select Single row for delete");
+           }
+        } 
     }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSearchActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
+        getAllUserTableData();
+        
+    }//GEN-LAST:event_formWindowOpened
+
+    private void onSelectRow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onSelectRow
+        // TODO add your handling code here:
+        if(tblUser.getSelectedRowCount()==1){
+            int selectedRow = tblUser.getSelectedRow();
+            String userId = tblUser.getValueAt(selectedRow, 0).toString();
+            String fullName = tblUser.getValueAt(selectedRow, 1).toString();
+            String email = tblUser.getValueAt(selectedRow, 2).toString();
+            String phone = tblUser.getValueAt(selectedRow, 3).toString();
+            String point = tblUser.getValueAt(selectedRow, 4).toString();
+            
+            // Now setText
+            lblUserId.setText(userId);
+            tfFullName.setText(fullName);
+            tfEmail.setText(email);
+            tfPhone.setText(phone);
+            tfPoints.setText(point);
+
+        } else {
+        if(tblUser.getRowCount() == 0){
+            JOptionPane.showMessageDialog(this, "Table is Empty");
+            } else {
+            JOptionPane.showMessageDialog(this, "Please Select Single row for update");
+           }
+        } 
+        
+    }//GEN-LAST:event_onSelectRow
+
+    private void tfSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfSearchKeyReleased
+        // TODO add your handling code here:
+        String searchCharacter = tfSearch.getText();
+        searchAndFilter(searchCharacter);
+    }//GEN-LAST:event_tfSearchKeyReleased
+
+   private void searchAndFilter(String searchText){
+       DefaultTableModel userTable = (DefaultTableModel) tblUser.getModel();
+       TableRowSorter<DefaultTableModel> tableRowSorter = new TableRowSorter<DefaultTableModel>(userTable);
+       tblUser.setRowSorter(tableRowSorter);
+       tableRowSorter.setRowFilter(RowFilter.regexFilter(searchText));
+   }
+
+    private void getAllUserTableData() {
         UserController uc = BaseApp.getUserController();
         List<User> userList = uc.getAllUser();
-    }//GEN-LAST:event_formWindowOpened
+        DefaultTableModel userTable = (DefaultTableModel) tblUser.getModel();
+
+        // Clear existing rows
+        userTable.setRowCount(0);
+
+        for (User user : userList) {
+            // Retrieve transaction details with fallbacks for null or empty values
+            String userId = String.valueOf(user.getUserId());
+            String email = String.valueOf(user.getEmail());
+
+            String fullName = user.getName();
+            String phone = user.getPhone();
+
+            String point = String.valueOf(user.getPoints()) != null
+                    ? String.valueOf(user.getPoints())
+                    : "-";
+
+            // Add a row to the table
+            userTable.addRow(new Object[] { userId, fullName, email, phone, point });
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -342,7 +449,6 @@ public class GetAllUser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;

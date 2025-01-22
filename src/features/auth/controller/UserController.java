@@ -3,6 +3,7 @@ package features.auth.controller;
 
 import features.auth.model.User;
 import features.auth.usecase.UserUsecase;
+import java.util.List;
 
 public class UserController {
     private UserUsecase userUsecase;
@@ -25,5 +26,13 @@ public class UserController {
 
     public void updateUserPoints(int points, int userId){
         userUsecase.updateUserPoints(points, userId);
+    }
+    
+    public List<User> getAllUser() {
+        return userUsecase.getAllUser();
+    }
+    
+    public boolean updateUserDetail(User user) {
+        return userUsecase.updateUserDetail(user);
     }
 }

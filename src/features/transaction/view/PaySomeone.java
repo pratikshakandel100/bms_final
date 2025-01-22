@@ -1,7 +1,6 @@
 package features.transaction.view;
 
 import core.BaseApp;
-import core.Session;
 import features.account.controller.AccountController;
 import features.account.model.Account;
 import features.auth.controller.UserController;
@@ -9,8 +8,8 @@ import features.auth.model.User;
 import features.transaction.controller.TransactionController;
 import java.awt.*;
 import java.awt.event.*;
-import java.time.LocalDate;
 import java.sql.Date;
+import java.time.LocalDate;
 import javax.swing.*;
 
 public class PaySomeone {    

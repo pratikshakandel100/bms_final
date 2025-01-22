@@ -47,17 +47,18 @@ public static String deleteUserById(String userId) {
     return CustomFormatter.format(template, values);
 }
 
-public static String deleteAllUsers() {
-    String template = "DELETE FROM {user_table}";
-    Map<String, String> values = Map.of("user_table", "bms_users");
+public static String updateUserQuery(User user) {
+    String template = "UPDATE {user_table} SET name='{name}', email='{email}', phone='{phone}', points={points} WHERE userId={userId}";
+    Map<String, String> values = Map.of(
+        "user_table", user_table,
+        "name", user.getName(),
+        "email", user.getEmail(),
+        "phone", user.getPhone(),
+        "points", String.valueOf(user.getPoints()),
+        "userId", String.valueOf(user.getUserId())
+    );
     return CustomFormatter.format(template, values);
 }
-
-public static String insertUser() {
-    String template = "INSERT INTO {user_table} (name, email, password, phone, address, points) VALUES ('{name}', '{email}', '{password}', '{phone}', '{address}', {points})";
-    Map<String, String> values = Map.of("user_table", "bms_users", "name", "{name}", "email", "{email}", "password", "{password}", "phone", "{phone}", "address", "{address}", "points", "{points}");
-    return CustomFormatter.format(template, values);
-} 
 
 public static String updateUserPointsQuery(int userId, int points) {
     String template = "update {user_table} set points = points+{points} where userId = {userId}";

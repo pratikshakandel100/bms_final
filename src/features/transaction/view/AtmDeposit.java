@@ -9,8 +9,8 @@ import features.auth.model.User;
 import features.transaction.controller.TransactionController;
 import java.awt.*;
 import java.awt.event.*;
-import java.time.LocalDate;
 import java.sql.Date;
+import java.time.LocalDate;
 import javax.swing.*;
 
 public class ATMDeposit {
@@ -21,7 +21,7 @@ public class ATMDeposit {
 
     private static void showDepositPopup(JFrame parent) {
         // Create a JDialog for the popup
-        JDialog popup = new JDialog(parent, "Pay Someone", true);
+        JDialog popup = new JDialog(parent, "ATM Deposit", true);
         popup.setSize(500, 300);
         popup.setLayout(new GridBagLayout());
         popup.setLocationRelativeTo(parent);

@@ -8,6 +8,8 @@ import features.kyc.model.KYCDetails;
 import features.kyc.utils.KYCQueryManager;
 import features.notification.utils.NotificationStringManager;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KYCRepositoryImpl implements KYCRepository{
         DbConnection dbConnection = Session.getSession().getDbConnection();
@@ -64,5 +66,38 @@ public class KYCRepositoryImpl implements KYCRepository{
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<KYCDetails> getAllKYCDetail() {
+        List<KYCDetails> kycList = new ArrayList<>();
+        try {
+            String query = KYCQueryManager.getALLKYCDetailQuery();
+            ResultSet result = dbConnection.executeWithResult(query);
+            while(result.next()){
+                KYCDetails kYCDetails = CustomMapper.mapResultSetToObject(result, KYCDetails.class);
+                kycList.add(kYCDetails);
+            }
+        } catch (Exception e) {
+        e.printStackTrace();
+        
+        }
+        return kycList;
+    }
+
+    @Override
+    public boolean updateKYCDetailById(String kycId, String userId, String identityType, boolean isVerified) {
+        String query = KYCQueryManager.updateKYCDetailByIdQuery(kycId,userId,identityType, isVerified);
+        boolean result =  dbConnection.executeOnly(query) > 0;
+        if(result == true && isVerified == true){
+            String fullName = BaseApp.getUserController().getUserDetails(Integer.parseInt(userId)).getName();
+            boolean notificationResult = BaseApp.getNotificationController().createNotification(
+                        Integer.parseInt(userId),
+                        NotificationStringManager.KYC_APPROVED_TITLE,
+                        String.format(NotificationStringManager.KYC_APPROVED_MESSAGE,fullName)
+                );
+                return notificationResult; 
+        }
+        return true;
     }
 }

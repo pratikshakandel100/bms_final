@@ -1,13 +1,14 @@
 package features.auth.repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
+import core.CustomMapper;
+import core.Session;
 import database.DbConnection;
 import features.auth.model.User;
 import features.auth.utils.UserQueryManager;
-import core.CustomMapper;
-import core.Session;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository{
     private DbConnection dbConnection = Session.getSession().getDbConnection();
@@ -68,6 +69,28 @@ public class UserRepositoryImpl implements UserRepository{
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        List<User> userList = new ArrayList<>();
+        try {
+            String query = UserQueryManager.viewAllUser();
+            ResultSet result = dbConnection.executeWithResult(query);
+            while (result.next()) {
+                User user = CustomMapper.mapResultSetToObject(result, User.class);
+                userList.add(user);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
+    @Override
+    public boolean updateUserDetail(User user) {
+        String query = UserQueryManager.updateUserQuery(user);
+        return dbConnection.executeOnly(query) > 0;
     }
 
 }

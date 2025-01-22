@@ -42,4 +42,22 @@ public class KYCQueryManager {
                 "userId", userId);
         return CustomFormatter.format(template, values);
     }
+    
+    public static String getALLKYCDetailQuery(){
+        String template = "select * from {kyc_table}";
+        Map<String,String> values = Map.of("kyc_table", kyc_table);
+        return CustomFormatter.format(template, values);
+    }
+    
+    public static String updateKYCDetailByIdQuery(String kycId, String userId, String identityType, boolean isVerified){
+        String template = "update {kyc_table} set isVerified = {isVerified},identityType='{identityType}' WHERE kycId = '{kycId}' and userId = '{userId}'";
+        Map<String,String> values = Map.of(
+                "kyc_table", kyc_table,
+                "isVerified",isVerified==true?"TRUE":"FALSE",
+                "identityType",identityType,
+                "kycId", kycId,
+                "userId",userId
+        );
+        return CustomFormatter.format(template, values);
+    }
 }
