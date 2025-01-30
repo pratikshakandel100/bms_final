@@ -3,7 +3,9 @@ package features.auth.view;
 import core.BaseApp;
 import features.auth.controller.UserController;
 import features.auth.model.User;
+import features.auth.model.UserType;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -410,9 +412,9 @@ public class GetAllUser extends javax.swing.JFrame {
 
     private void getAllUserTableData() {
         UserController uc = BaseApp.getUserController();
-        List<User> userList = uc.getAllUser();
+        List<User> fetchedUserList = uc.getAllUser();
         DefaultTableModel userTable = (DefaultTableModel) tblUser.getModel();
-
+        List<User> userList = fetchedUserList.stream().filter(user -> user.getRole().equalsIgnoreCase(UserType.USER.name())).collect(Collectors.toList());
         // Clear existing rows
         userTable.setRowCount(0);
 

@@ -47,14 +47,14 @@ public class DbConnection {
 
     private void connectDatabase(){
         try {
-            String username = "root";
-            String password = "root";
+            String username = "avnadmin";
+            String password = "AVNS_PPdFLhD5WE3IbhOTyzQ";
             String dbName = "bms";
-            String db_url = String.format("jdbc:mysql://localhost:3306/%s", dbName);
+            String db_url = String.format("jdbc:mysql://pratiksha-bms-cloud-pratikshakandel100.d.aivencloud.com:24047/%s?useSSL=true&requireSSL=true", dbName);
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(db_url, username, password);
             if(connection != null){
-                System.out.println("\n"+dbName+" Database connected");
+                System.out.println("\n"+dbName+" Cloud Database connected");
                 statement = connection.createStatement();
             } else {
                 System.out.println("Error connecting on database");
