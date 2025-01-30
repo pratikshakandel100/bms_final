@@ -1,12 +1,12 @@
-package features.kyc.view;
+package features.account.view.screens;
 
 import core.BaseApp;
-import core.CustomDateFormatter;
+import features.account.controller.AccountController;
+import features.account.model.Account;
+import features.account.model.AccountStatus;
+import features.account.model.AccountType;
 import features.auth.controller.UserController;
 import features.auth.model.User;
-import features.kyc.controller.KYCController;
-import features.kyc.model.IdentityType;
-import features.kyc.model.KYCDetails;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -17,12 +17,12 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Pratiksha
  */
-public class GetAllKYC extends javax.swing.JFrame {
+public class GetAllAccount extends javax.swing.JFrame {
 
     /**
      * Creates new form GetAllUser
      */
-    public GetAllKYC() {
+    public GetAllAccount() {
         initComponents();
     }
 
@@ -45,22 +45,20 @@ public class GetAllKYC extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblKYC = new javax.swing.JTable();
+        tblAccount = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
-        lblKYCId = new javax.swing.JLabel();
+        lblAccId = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         tfSearch = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        tfIdentityNumber = new javax.swing.JTextField();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        tfIdentityIssueDate = new javax.swing.JTextField();
-        cbIdentityType = new javax.swing.JComboBox<>();
+        tfAccBalance = new javax.swing.JTextField();
+        cbAccType = new javax.swing.JComboBox<>();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel14 = new javax.swing.JLabel();
@@ -68,12 +66,18 @@ public class GetAllKYC extends javax.swing.JFrame {
         lblFullName = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
-        cbKYCVerifiedStatus = new javax.swing.JComboBox<>();
+        cbAccStatus = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
-        lblKYCCreatedAt = new javax.swing.JLabel();
+        lblAccNum = new javax.swing.JLabel();
         lblPhone = new javax.swing.JLabel();
+        loanReqPanel = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        tfLoanReqAmount = new javax.swing.JTextField();
+        lblFullName1 = new javax.swing.JLabel();
+        lblLoanSuggestedBalance = new javax.swing.JLabel();
+        lblFullName3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -106,7 +110,7 @@ public class GetAllKYC extends javax.swing.JFrame {
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblBack)
+                .addComponent(lblBack, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pInfotitle1)
                 .addGap(254, 254, 254)
@@ -119,7 +123,7 @@ public class GetAllKYC extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(headerPanelLayout.createSequentialGroup()
-                        .addComponent(lblBack)
+                        .addComponent(lblBack, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(pInfotitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -138,33 +142,33 @@ public class GetAllKYC extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel5.setText("Phone:");
 
-        tblKYC.setBackground(new java.awt.Color(204, 255, 204));
-        tblKYC.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        tblKYC.setModel(new javax.swing.table.DefaultTableModel(
+        tblAccount.setBackground(new java.awt.Color(204, 255, 204));
+        tblAccount.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        tblAccount.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "KYC ID", "User ID", "Identity Type", "Identity Number", "Identity Issue Date", "KYC Verified?", "KYC Submitted"
+                "Account ID", "User ID", "Account Number", "Available Balance", "Account Type", "Account Status"
             }
         ));
-        tblKYC.setGridColor(new java.awt.Color(51, 51, 255));
-        tblKYC.setShowGrid(true);
-        tblKYC.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblAccount.setGridColor(new java.awt.Color(51, 51, 255));
+        tblAccount.setShowGrid(true);
+        tblAccount.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 onSelectRow(evt);
             }
         });
-        jScrollPane1.setViewportView(tblKYC);
+        jScrollPane1.setViewportView(tblAccount);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel6.setText("User ID:");
 
-        lblKYCId.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        lblKYCId.setText("0");
+        lblAccId.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        lblAccId.setText("0");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel8.setText("Search");
@@ -182,19 +186,13 @@ public class GetAllKYC extends javax.swing.JFrame {
         });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel7.setText("KYC Information");
+        jLabel7.setText("Account Information");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel9.setText("KYC ID:");
+        jLabel9.setText("Account ID:");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel10.setText("Identity Type:");
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel11.setText("Identity Number:");
-
-        tfIdentityNumber.setEditable(false);
-        tfIdentityNumber.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel10.setText("Account Type:");
 
         btnUpdate.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         btnUpdate.setText("Update");
@@ -213,16 +211,15 @@ public class GetAllKYC extends javax.swing.JFrame {
         });
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel12.setText("KYC Verified Status:");
+        jLabel12.setText("Account Status:");
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel13.setText("Identity Issue Date:");
+        jLabel13.setText("Available Balance:");
 
-        tfIdentityIssueDate.setEditable(false);
-        tfIdentityIssueDate.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        tfAccBalance.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
 
-        cbIdentityType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Passport", "National ID", "Driving License" }));
-        cbIdentityType.setSelectedIndex(2);
+        cbAccType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal", "Saver", "Loan" }));
+        cbAccType.setEnabled(false);
 
         jSeparator2.setForeground(new java.awt.Color(0, 255, 255));
 
@@ -242,16 +239,69 @@ public class GetAllKYC extends javax.swing.JFrame {
 
         jSeparator4.setForeground(new java.awt.Color(0, 255, 255));
 
-        cbKYCVerifiedStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Approved", "Pending", "Rejected" }));
+        cbAccStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "In-Active", "Closed" }));
+        cbAccStatus.setSelectedIndex(2);
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel15.setText("KYC Submitted On:");
+        jLabel15.setText("Account Number:");
 
-        lblKYCCreatedAt.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        lblKYCCreatedAt.setText("0");
+        lblAccNum.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        lblAccNum.setForeground(new java.awt.Color(0, 0, 204));
+        lblAccNum.setText("0");
 
         lblPhone.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         lblPhone.setForeground(new java.awt.Color(204, 0, 204));
+
+        loanReqPanel.setBackground(new java.awt.Color(153, 204, 255));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        jLabel11.setText("Requested Amount:");
+
+        tfLoanReqAmount.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+
+        lblFullName1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        lblFullName1.setForeground(new java.awt.Color(0, 0, 153));
+        lblFullName1.setText("( Suggested Loan Balance: Rs.");
+
+        lblLoanSuggestedBalance.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        lblLoanSuggestedBalance.setForeground(new java.awt.Color(0, 0, 153));
+        lblLoanSuggestedBalance.setText("200");
+
+        lblFullName3.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        lblFullName3.setForeground(new java.awt.Color(0, 0, 153));
+        lblFullName3.setText(")");
+
+        javax.swing.GroupLayout loanReqPanelLayout = new javax.swing.GroupLayout(loanReqPanel);
+        loanReqPanel.setLayout(loanReqPanelLayout);
+        loanReqPanelLayout.setHorizontalGroup(
+            loanReqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loanReqPanelLayout.createSequentialGroup()
+                .addComponent(jLabel11)
+                .addGap(24, 24, 24)
+                .addComponent(tfLoanReqAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loanReqPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblFullName1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblLoanSuggestedBalance)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblFullName3)
+                .addGap(64, 64, 64))
+        );
+        loanReqPanelLayout.setVerticalGroup(
+            loanReqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loanReqPanelLayout.createSequentialGroup()
+                .addGroup(loanReqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfLoanReqAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(loanReqPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFullName1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLoanSuggestedBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFullName3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -296,48 +346,47 @@ public class GetAllKYC extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel2)))
-                        .addGap(149, 149, 149))))
+                        .addGap(149, 153, Short.MAX_VALUE))))
             .addComponent(jSeparator4)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(333, 333, 333)
-                        .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblKYCCreatedAt, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(170, 170, 170)
-                        .addComponent(btnUpdate))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(303, 303, 303)
-                        .addComponent(btnDelete))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbIdentityType, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(tfIdentityNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(60, 60, 60)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbKYCVerifiedStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel13)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(tfIdentityIssueDate, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblAccId))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(348, 348, 348)
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblAccNum, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(170, 170, 170)
+                                .addComponent(btnUpdate))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(303, 303, 303)
+                                .addComponent(btnDelete))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblKYCId)))
+                        .addGap(164, 164, 164)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel10))
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbAccStatus, 0, 110, Short.MAX_VALUE)
+                            .addComponent(cbAccType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(108, 108, 108)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(30, 30, 30)
+                                .addComponent(tfAccBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(loanReqPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(43, 43, 43))
         );
         jPanel1Layout.setVerticalGroup(
@@ -355,25 +404,27 @@ public class GetAllKYC extends javax.swing.JFrame {
                         .addComponent(jLabel7)))
                 .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblKYCId)
+                    .addComponent(lblAccId)
                     .addComponent(jLabel9)
-                    .addComponent(lblKYCCreatedAt)
+                    .addComponent(lblAccNum)
                     .addComponent(jLabel15))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel10)
-                        .addComponent(cbIdentityType, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
-                            .addComponent(tfIdentityIssueDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(tfAccBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbAccType, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfIdentityNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12)
-                    .addComponent(cbKYCVerifiedStatus))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbAccStatus)
+                        .addComponent(jLabel12))
+                    .addComponent(loanReqPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdate)
@@ -424,7 +475,8 @@ public class GetAllKYC extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        getAllKYCTableData();
+        loanReqPanel.setVisible(false);
+        getAllAccountTableData();
         
     }//GEN-LAST:event_formWindowOpened
 
@@ -434,41 +486,76 @@ public class GetAllKYC extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        KYCController kYCController = BaseApp.getKycController();
-        IdentityType selectedIdentityType = IdentityType.DrivingLicense;
-        boolean isVerified = false;
-        if(tblKYC.getSelectedRowCount()==1){
-            int selectedRow = tblKYC.getSelectedRow();
-            String kycId = tblKYC.getValueAt(selectedRow, 0).toString();
-            String userId = tblKYC.getValueAt(selectedRow, 1).toString();
+        AccountController accountController = BaseApp.getAccountController();
+        AccountStatus accountStatus = AccountStatus.CLOSED;
+//        boolean isVerified = false;
+        if(tblAccount.getSelectedRowCount()==1){
+            int selectedRow = tblAccount.getSelectedRow();
+            String accountId = tblAccount.getValueAt(selectedRow, 0).toString();
+            String userId = tblAccount.getValueAt(selectedRow, 1).toString();
+            String accountNumber = tblAccount.getValueAt(selectedRow, 2).toString();
+            String accountBalance = tblAccount.getValueAt(selectedRow, 3).toString();
+            String accountType = tblAccount.getValueAt(selectedRow, 4).toString();
+            String currentAccountStatus = tblAccount.getValueAt(selectedRow, 5).toString();
             
-            int newIdentityType = cbIdentityType.getSelectedIndex();
-            if(newIdentityType == 0){
-                selectedIdentityType = IdentityType.Passport;
-            } else if(newIdentityType == 1){
-                selectedIdentityType = IdentityType.NationalID;
+            if(accountType.equalsIgnoreCase(AccountType.LOAN.name()) && currentAccountStatus.equalsIgnoreCase(AccountStatus.INACTIVE.name())){
+                loanReqPanel.setVisible(true);
+                tfAccBalance.setEnabled(false);
             } else {
-                selectedIdentityType = IdentityType.DrivingLicense;
+                tfAccBalance.setEnabled(true);
+            }
+            String reqAmount = tfLoanReqAmount.getText();
+            String tfBalance = tfAccBalance.getText();
+            
+            int newAccStatus = cbAccStatus.getSelectedIndex();
+            if(newAccStatus == 0){
+                accountStatus = AccountStatus.ACTIVE; 
+            } else if(newAccStatus == 1){
+                accountStatus = AccountStatus.INACTIVE; 
+            }else {
+                accountStatus = AccountStatus.CLOSED;
             }
             
-            int newKYCVerificationStatus = cbKYCVerifiedStatus.getSelectedIndex();
-            if(newKYCVerificationStatus == 0){
-                isVerified = true; 
-            } else {
-                isVerified = false;
+            if(accountStatus == AccountStatus.CLOSED){
+                JOptionPane.showMessageDialog(this, "Please visit your nearest branch for closing account.");
+                return;
             }
-
-            boolean result = kYCController.updateKYCDetailById(kycId,userId,selectedIdentityType.name(), isVerified);
-
+            if(accountStatus == AccountStatus.INACTIVE && accountBalance.equals(tfBalance)){
+                JOptionPane.showMessageDialog(this, "Failed to update the status to inactive.");
+                return;
+            }
+            boolean result = false;
+            try {
+                if(accountStatus == AccountStatus.ACTIVE && !accountType.equalsIgnoreCase(AccountType.LOAN.name()) && accountBalance.equals(tfBalance)){
+                    accountController.approveAccountOpeningRequest(Integer.parseInt(userId));
+                } else if(accountStatus == AccountStatus.ACTIVE && !accountType.equalsIgnoreCase(AccountType.LOAN.name()) && !accountBalance.equals(tfBalance)){
+                    accountController.updateAccountBalance(accountNumber,-Double.parseDouble(accountBalance));
+                    accountController.updateAccountBalance(accountNumber,Double.parseDouble(tfBalance));
+                } else if(accountStatus == AccountStatus.ACTIVE && accountType.equalsIgnoreCase(AccountType.LOAN.name())){
+                    
+                    accountController.approveLoanAccountOpeningRequest(Integer.parseInt(userId));
+                    // Set inital balance to zero
+                    accountController.updateAccountBalance(accountNumber,-Double.parseDouble(accountBalance));
+                    accountController.updateAccountBalance(accountNumber,-Double.parseDouble(tfLoanReqAmount.getText()));
+                }
+                result=true;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "An Unknown error occur");
+                result = false;
+                return;
+            }
+            
             if(result){
-                JOptionPane.showMessageDialog(this, "KYC Detail are up-to-date now");
-                tblKYC.repaint();
-                tblKYC.validate();
-                getAllKYCTableData();
-                lblKYCId.setText("");
-                lblKYCCreatedAt.setText("");
-                tfIdentityNumber.setText("");
-                tfIdentityIssueDate.setText("");
+                JOptionPane.showMessageDialog(this, "Account Details are up-to-date now");
+                tblAccount.repaint();
+                tblAccount.validate();
+                getAllAccountTableData();
+                lblAccId.setText("");
+                lblAccNum.setText("");
+                tfLoanReqAmount.setText("");
+                lblLoanSuggestedBalance.setText("0");
+                tfAccBalance.setText("");
+                loanReqPanel.setVisible(false);
                 
                 // set user details empty textfield
                 lblEmail.setText("");
@@ -476,10 +563,10 @@ public class GetAllKYC extends javax.swing.JFrame {
                 lblPhone.setText("");
                 lblUserId.setText("");
            } else {
-                JOptionPane.showMessageDialog(this, "Failed to update user Detail");
+                JOptionPane.showMessageDialog(this, "Failed to update Account Detail");
             }
         } else {
-        if(tblKYC.getRowCount() == 0){
+        if(tblAccount.getRowCount() == 0){
             JOptionPane.showMessageDialog(this, "Table is Empty");
         } else {
             JOptionPane.showMessageDialog(this, "Please Select Single row for update");
@@ -495,42 +582,63 @@ public class GetAllKYC extends javax.swing.JFrame {
 
     private void onSelectRow(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onSelectRow
         // TODO add your handling code here:
-        if(tblKYC.getSelectedRowCount()==1){
-            int selectedRow = tblKYC.getSelectedRow();
-            String kycId = tblKYC.getValueAt(selectedRow, 0).toString();
-            String userId = tblKYC.getValueAt(selectedRow, 1).toString();
-            String identityType = tblKYC.getValueAt(selectedRow, 2).toString();
-            String identityNumber = tblKYC.getValueAt(selectedRow, 3).toString();
-            String identityIssueDate = tblKYC.getValueAt(selectedRow, 4).toString();
-            String isKYCVerified = tblKYC.getValueAt(selectedRow, 5).toString();
-            String createdAt = tblKYC.getValueAt(selectedRow, 6).toString();
+        if(tblAccount.getSelectedRowCount()==1){
+            int selectedRow = tblAccount.getSelectedRow();
+            String accountId = tblAccount.getValueAt(selectedRow, 0).toString();
+            String userId = tblAccount.getValueAt(selectedRow, 1).toString();
+            String accountNumber = tblAccount.getValueAt(selectedRow, 2).toString();
+            String accountBalance = tblAccount.getValueAt(selectedRow, 3).toString();
+            String accountType = tblAccount.getValueAt(selectedRow, 4).toString();
+            String currentAccountStatus = tblAccount.getValueAt(selectedRow, 5).toString();
 
             // Now setText
-            lblKYCId.setText(kycId);
-            lblKYCCreatedAt.setText(createdAt);
-            tfIdentityNumber.setText(identityNumber);
-            tfIdentityIssueDate.setText(identityIssueDate);
+            lblAccId.setText(accountId);
+            lblAccNum.setText(accountNumber);
             
-            if(identityType.replace(" ", "").equalsIgnoreCase(IdentityType.Passport.name())){
-                cbIdentityType.setSelectedIndex(0);
-            } else if(identityType.replace(" ", "").equalsIgnoreCase(IdentityType.NationalID.name())){
-                cbIdentityType.setSelectedIndex(1);
-            } else {
-                cbIdentityType.setSelectedIndex(2);
+            if(accountType.equalsIgnoreCase(AccountType.LOAN.name()) && currentAccountStatus.equalsIgnoreCase(AccountStatus.INACTIVE.name())){
+                tfAccBalance.setText("0");
+                tfAccBalance.setEnabled(false);
+                tfLoanReqAmount.setEnabled(true);
+                tfLoanReqAmount.setText(accountBalance);
+                String loanSuggestedBalance = getLoanSuggestedBalance(userId);
+                lblLoanSuggestedBalance.setText(loanSuggestedBalance);
+                loanReqPanel.setVisible(true);
+            } else if(accountType.equalsIgnoreCase(AccountType.LOAN.name()) && currentAccountStatus.equalsIgnoreCase(AccountStatus.ACTIVE.name())){
+                tfAccBalance.setText(accountBalance);
+                tfAccBalance.setEnabled(true);
+                tfLoanReqAmount.setText("0");
+                tfLoanReqAmount.setEnabled(false);
+                lblLoanSuggestedBalance.setText("0");
+                loanReqPanel.setVisible(false);
+            } else if(!accountType.equalsIgnoreCase(AccountType.LOAN.name()) && currentAccountStatus.equalsIgnoreCase(AccountStatus.ACTIVE.name())){
+                tfAccBalance.setText(accountBalance);
+                tfAccBalance.setEnabled(true);
+                tfLoanReqAmount.setText("0");
+                tfLoanReqAmount.setEnabled(false);
+                lblLoanSuggestedBalance.setText("0");
+                loanReqPanel.setVisible(false);
             }
             
-            if(isKYCVerified.equalsIgnoreCase("Verified")){
-                cbKYCVerifiedStatus.setSelectedIndex(0);
-            } else if(isKYCVerified.equalsIgnoreCase("Pending")){
-                cbKYCVerifiedStatus.setSelectedIndex(1);
+            if(accountType.equalsIgnoreCase(AccountType.NORMAL.name())){
+                cbAccType.setSelectedIndex(0);
+            } else if(accountType.equalsIgnoreCase(AccountType.SAVER.name())){
+                cbAccType.setSelectedIndex(1);
             } else {
-                cbKYCVerifiedStatus.setSelectedIndex(2);
+                cbAccType.setSelectedIndex(2);
+            }
+            
+            if(currentAccountStatus.equalsIgnoreCase(AccountStatus.ACTIVE.name())){
+                cbAccStatus.setSelectedIndex(0);
+            } else if(currentAccountStatus.equalsIgnoreCase(AccountStatus.INACTIVE.name())){
+                cbAccStatus.setSelectedIndex(1);
+            } else {
+                cbAccStatus.setSelectedIndex(2);
             }
             
             setUserDetails(userId);
 
         } else {
-            if(tblKYC.getRowCount() == 0){
+            if(tblAccount.getRowCount() == 0){
                 JOptionPane.showMessageDialog(this, "Table is Empty");
             } else {
                 JOptionPane.showMessageDialog(this, "Please Select Single row for update");
@@ -539,6 +647,27 @@ public class GetAllKYC extends javax.swing.JFrame {
 
     }//GEN-LAST:event_onSelectRow
 
+    private String getLoanSuggestedBalance(String userId){
+        UserController uc = BaseApp.getUserController();
+        int points = uc.getUserDetails(Integer.parseInt(userId)).getPoints();
+        return String.valueOf(calculateAndSuggestLoanAmount(points));
+    }
+    private double calculateAndSuggestLoanAmount(int points){
+        if(points <100){
+            return 1000;
+        }else if(points <500){
+            return 5000;
+        } else if(points <1000){
+            return 10000;
+        } else if(points <2000){
+            return 20000;
+        } else if(points <5000){
+            return 50000;
+        } else {
+            return 100000;
+        }
+    }
+    
     private void tfSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfSearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfSearchActionPerformed
@@ -551,9 +680,9 @@ public class GetAllKYC extends javax.swing.JFrame {
    //
     
     private void searchAndFilter(String searchText){
-       DefaultTableModel userTable = (DefaultTableModel) tblKYC.getModel();
+       DefaultTableModel userTable = (DefaultTableModel) tblAccount.getModel();
        TableRowSorter<DefaultTableModel> tableRowSorter = new TableRowSorter<DefaultTableModel>(userTable);
-       tblKYC.setRowSorter(tableRowSorter);
+       tblAccount.setRowSorter(tableRowSorter);
        tableRowSorter.setRowFilter(RowFilter.regexFilter(searchText));
    }
     private void setUserDetails(String userId){
@@ -565,27 +694,25 @@ public class GetAllKYC extends javax.swing.JFrame {
         lblEmail.setText(user.getEmail());
     }
 
-    private void getAllKYCTableData() {
-        KYCController kYCController = BaseApp.getKycController();
-        List<KYCDetails> kycList = kYCController.getAllKYCDetail();
-        DefaultTableModel kycTable = (DefaultTableModel) tblKYC.getModel();
+    private void getAllAccountTableData() {
+        AccountController accountController = BaseApp.getAccountController();
+        List<Account> accountList = accountController.getAllAccount();
+        DefaultTableModel accountTable = (DefaultTableModel) tblAccount.getModel();
 
         // Clear existing rows
-        kycTable.setRowCount(0);
+        accountTable.setRowCount(0);
 
-        for (KYCDetails kyc : kycList) {
+        for (Account account : accountList) {
             // Retrieve transaction details with fallbacks for null or empty values
-            String userId = String.valueOf(kyc.getUserId());
-            String kycId = String.valueOf(kyc.getKycId());
-
-            String identityIssueDate = CustomDateFormatter.convertJAVADateToFormatted(kyc.getIdentityIssueDate());
-            String identityType = kyc.getIdentityType();
-            String identityNumber = kyc.getIdentityNumber();
-            boolean isVerified = kyc.isVerified();
-            String verificationText = isVerified==true?"Verified":"Pending";
-            String kycSubmittedOn = "now";
+            String userId = String.valueOf(account.getUserId());
+            String accountId = String.valueOf(account.getAccountId());
+            String accountNumber = account.getAccountNumber();
+            String balance = String.valueOf(account.getBalance());
+            String accountType = account.getAccountType();
+            String accountStatus = account.getStatus();
+           
             // Add a row to the table
-            kycTable.addRow(new Object[] { kycId, userId, identityType,identityNumber,identityIssueDate,verificationText,kycSubmittedOn});
+            accountTable.addRow(new Object[] { accountId, userId, accountNumber,balance,accountType,accountStatus});
         }
     }
 
@@ -606,21 +733,23 @@ public class GetAllKYC extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GetAllKYC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GetAllAccount.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GetAllKYC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GetAllAccount.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GetAllKYC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GetAllAccount.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GetAllKYC.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GetAllAccount.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GetAllKYC().setVisible(true);
+                new GetAllAccount().setVisible(true);
             }
         });
     }
@@ -628,8 +757,8 @@ public class GetAllKYC extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cbIdentityType;
-    private javax.swing.JComboBox<String> cbKYCVerifiedStatus;
+    private javax.swing.JComboBox<String> cbAccStatus;
+    private javax.swing.JComboBox<String> cbAccType;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -650,18 +779,22 @@ public class GetAllKYC extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JLabel lblAccId;
+    private javax.swing.JLabel lblAccNum;
     private javax.swing.JLabel lblBack;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblFullName;
-    private javax.swing.JLabel lblKYCCreatedAt;
-    private javax.swing.JLabel lblKYCId;
+    private javax.swing.JLabel lblFullName1;
+    private javax.swing.JLabel lblFullName3;
+    private javax.swing.JLabel lblLoanSuggestedBalance;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPhone;
     private javax.swing.JLabel lblUserId;
+    private javax.swing.JPanel loanReqPanel;
     private javax.swing.JLabel pInfotitle1;
-    private javax.swing.JTable tblKYC;
-    private javax.swing.JTextField tfIdentityIssueDate;
-    private javax.swing.JTextField tfIdentityNumber;
+    private javax.swing.JTable tblAccount;
+    private javax.swing.JTextField tfAccBalance;
+    private javax.swing.JTextField tfLoanReqAmount;
     private javax.swing.JTextField tfSearch;
     // End of variables declaration//GEN-END:variables
 }

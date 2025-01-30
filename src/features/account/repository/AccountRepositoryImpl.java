@@ -122,7 +122,6 @@ public class AccountRepositoryImpl implements AccountRepository{
     }
 
     public List<Account> getAllActiveUserAccount(int userId) {
-//        System.out.println(getAllUserAccountByStatus(userId, "Active"));
         return getAllUserAccountByStatus(userId, "Active");
     }
 
@@ -133,7 +132,7 @@ public class AccountRepositoryImpl implements AccountRepository{
     public List<Account> getAllClosedUserAccount(int userId) {
         return getAllUserAccountByStatus(userId, "Closed");
     }
-
+    
     public boolean approveAccountOpeningRequest(int userId) {  
         String requestQuery = AccountQueryManager.acceptAccountOpeningRequestQuery(userId);
         int result = dbConnection.executeOnly(requestQuery);
@@ -160,6 +159,22 @@ public class AccountRepositoryImpl implements AccountRepository{
             return notificationResult; // Return notification result
         }
         return false; // Approval failed
+    }
+
+    @Override
+    public List<Account> getAllAccount() {
+        List<Account> accounts = new ArrayList<>(); // Initialize the variable
+        try {
+            String query = AccountQueryManager.getAllAccountQuery();
+            ResultSet result = dbConnection.executeWithResult(query);
+            while (result.next()) { // Use if instead of while, as we expect only one result
+                Account account = CustomMapper.mapResultSetToObject(result, Account.class);
+                accounts.add(account);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return accounts; // Return null if no result is found or exception occurs
     }
 }
     

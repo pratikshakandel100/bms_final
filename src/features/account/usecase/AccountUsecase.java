@@ -55,6 +55,9 @@ public class AccountUsecase {
         return accountRepository.getAllUserAccount(userId);
     }
     
-
+    public List<Account> getAllAccount() {
+        return accountRepository.getAllAccount();
+    }
+    
 
 }
