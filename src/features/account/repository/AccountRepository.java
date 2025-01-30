@@ -17,6 +17,7 @@ public interface AccountRepository{
     public List<Account> getAllClosedUserAccount(int userId);
     public boolean approveLoanAccountOpeningRequest(int userId);
     public boolean approveAccountOpeningRequest(int userId);
+    public List<Account> getAllAccount();
     
     
 

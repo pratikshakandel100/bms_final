@@ -5,13 +5,14 @@
 package features.auth.view;
 
 import core.Session;
+import features.account.view.screens.GetAllAccount;
 import features.auth.model.User;
 import features.kyc.view.GetAllKYC;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author smike
+ * @author Pratiksha
  */
 public class AdminDashboard extends javax.swing.JFrame {
 
@@ -39,7 +40,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         menuPanel = new javax.swing.JPanel();
         pInfotitle2 = new javax.swing.JLabel();
         pInfotitle3 = new javax.swing.JLabel();
-        pInfotitle5 = new javax.swing.JLabel();
         pInfotitle4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -109,10 +109,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         pInfotitle3.setFont(new java.awt.Font("Segoe UI Semibold", 3, 18)); // NOI18N
         pInfotitle3.setForeground(new java.awt.Color(255, 51, 51));
         pInfotitle3.setText("BANK ACCOUNT");
-
-        pInfotitle5.setFont(new java.awt.Font("Segoe UI Semibold", 3, 18)); // NOI18N
-        pInfotitle5.setForeground(new java.awt.Color(255, 51, 51));
-        pInfotitle5.setText("LOAN ACCOUNT");
+        pInfotitle3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                onBankAccountClick(evt);
+            }
+        });
 
         pInfotitle4.setFont(new java.awt.Font("Segoe UI Semibold", 3, 18)); // NOI18N
         pInfotitle4.setForeground(new java.awt.Color(255, 51, 51));
@@ -128,15 +129,13 @@ public class AdminDashboard extends javax.swing.JFrame {
         menuPanelLayout.setHorizontalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuPanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(146, 146, 146)
                 .addComponent(pInfotitle4)
                 .addGap(88, 88, 88)
                 .addComponent(pInfotitle2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addComponent(pInfotitle3, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
-                .addComponent(pInfotitle5, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                .addGap(97, 97, 97))
         );
         menuPanelLayout.setVerticalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,7 +144,6 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(pInfotitle2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pInfotitle3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pInfotitle5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pInfotitle4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -206,6 +204,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_onLogoutClick
 
+    private void onBankAccountClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onBankAccountClick
+        // TODO add your handling code here:
+        new GetAllAccount().setVisible(true);
+    }//GEN-LAST:event_onBankAccountClick
+
     /**
      * @param args the command line arguments
      */
@@ -251,6 +254,5 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel pInfotitle2;
     private javax.swing.JLabel pInfotitle3;
     private javax.swing.JLabel pInfotitle4;
-    private javax.swing.JLabel pInfotitle5;
     // End of variables declaration//GEN-END:variables
 }

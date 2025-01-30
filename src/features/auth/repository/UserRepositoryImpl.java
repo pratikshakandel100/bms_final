@@ -16,6 +16,7 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public void updateUserPoints(int points, int userId) {
         String query = UserQueryManager.updateUserPointsQuery(userId, points);
+        System.out.println(query);
         dbConnection.executeOnly(query);
     }
 

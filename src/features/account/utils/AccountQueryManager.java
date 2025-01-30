@@ -61,4 +61,10 @@ public static String acceptLoanAccountOpeningRequestQuery(int userId){
     return CustomFormatter.format(template, values);
 }
 
+public static String getAllAccountQuery() {
+    String template = "select * from {account_table}";
+    Map<String, String> values = Map.of("account_table", account_table);
+    return CustomFormatter.format(template, values);
+}
+
 }

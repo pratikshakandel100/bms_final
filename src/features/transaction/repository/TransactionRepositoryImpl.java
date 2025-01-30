@@ -56,7 +56,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             // Reward points for OTHER transactions
             if (fromAccount.getUserId() != toAccount.getUserId()) {
                 int pointsToAdd = (int) (amount * 0.1); // 10% reward points
-                userRepository.updateUserPoints(fromAccount.getUserId(), pointsToAdd);
+                userRepository.updateUserPoints(pointsToAdd,fromAccount.getUserId());
             }
 
             // Create notifications for both sender and receiver
@@ -178,13 +178,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                     fromAccount.getAccountId(), toAccount.getAccountId(), amount, TransactionType.TRANSFER.name(),
                     description, references);
             dbConnection.executeOnly(query);
-
-            // Reward points for OTHER transactions
-            if (fromAccount.getUserId() != toAccount.getUserId()) {
-                int pointsToAdd = (int) (amount * 0.1); // 10% reward points
-                userRepository.updateUserPoints(fromAccount.getUserId(), pointsToAdd);
-            }
-
+            
             // Create notifications for both sender and receiver
             notificationRepository.createNotification(fromAccount.getUserId(),
                     NotificationStringManager.PAYMENT_SENT_TITLE,

@@ -6,7 +6,7 @@ package features.notification.view;
 
 /**
  *
- * @author smike
+ * @author Pratiksha
  */
 public enum NotificationStatus {
     READ,

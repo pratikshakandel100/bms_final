@@ -55,6 +55,10 @@ public class AccountController {
         return accountUsecase.getAllUserAccount(userId);
     }
     
+    public List<Account> getAllAccount() {
+        return accountUsecase.getAllAccount();
+    }
+    
 
 
 }
