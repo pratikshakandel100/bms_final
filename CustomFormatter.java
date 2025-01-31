@@ -11,7 +11,7 @@ public class CustomFormatter {
     }
 
     public static void main(String[] args) {
-        String template = "Hi! I am {name}  {age}";
+        String template = "Hi!  {name}  {age}";
         Map<String,String> values = Map.of("name","Pratiksha","age","22");
         System.out.println(CustomFormatter.format(template, values));
         System.out.println();
