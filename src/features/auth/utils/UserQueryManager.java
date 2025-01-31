@@ -30,7 +30,7 @@ public static String loginQuery(String email, String password) {
 }
 
 public static String viewAllUser() {
-String template = "SELECT userId,name,email,phone,points,role FROM {user_table}";
+String template = "SELECT userId,name,email,dob,phone,points,role FROM {user_table}";
 Map<String, String> values = Map.of("user_table", "bms_users");
 return CustomFormatter.format(template, values);
 }

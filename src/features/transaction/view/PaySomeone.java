@@ -165,7 +165,7 @@ public class PaySomeone {
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(popup, "Invalid date. Please check your input.", "Error", JOptionPane.ERROR_MESSAGE);
-                    dayField.requestFocus();
+//                    dayField.requestFocus();
                 }
             }
             
