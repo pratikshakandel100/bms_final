@@ -155,6 +155,10 @@ public class ATMWithdraw {
                             String foundText = String.format("{Account Holder Name: '%s' & Phone: '%s'}", user.getName(),user.getPhone());
                             userFullNameLabel.setText(foundText);
                             userFoundPanel.setVisible(true);
+                        }else {
+                        JOptionPane.showMessageDialog(popup, "Either Account Number or Date of Birth is Incorrect. Please check your input.", "Error", JOptionPane.ERROR_MESSAGE);
+                            accountNumberField.requestFocus();
+                            return;
                         }
                         popup.revalidate();
                         popup.repaint();

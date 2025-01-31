@@ -532,14 +532,18 @@ public class GetAllAccount extends javax.swing.JFrame {
                     accountController.updateAccountBalance(accountNumber,-Double.parseDouble(accountBalance));
                     accountController.updateAccountBalance(accountNumber,Double.parseDouble(tfBalance));
                 } else if(accountStatus == AccountStatus.ACTIVE && accountType.equalsIgnoreCase(AccountType.LOAN.name())){
-                    
                     accountController.approveLoanAccountOpeningRequest(Integer.parseInt(userId));
                     // Set inital balance to zero
                     accountController.updateAccountBalance(accountNumber,-Double.parseDouble(accountBalance));
-                    accountController.updateAccountBalance(accountNumber,-Double.parseDouble(tfLoanReqAmount.getText()));
+                    if(Double.parseDouble(tfLoanReqAmount.getText())<0){
+                        accountController.updateAccountBalance(accountNumber,Double.parseDouble(tfLoanReqAmount.getText()));
+                    } else {
+                        accountController.updateAccountBalance(accountNumber,-Double.parseDouble(tfLoanReqAmount.getText()));
+                    }
                 }
                 result=true;
             } catch (Exception e) {
+                e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "An Unknown error occur");
                 result = false;
                 return;
@@ -604,6 +608,13 @@ public class GetAllAccount extends javax.swing.JFrame {
                 lblLoanSuggestedBalance.setText(loanSuggestedBalance);
                 loanReqPanel.setVisible(true);
             } else if(accountType.equalsIgnoreCase(AccountType.LOAN.name()) && currentAccountStatus.equalsIgnoreCase(AccountStatus.ACTIVE.name())){
+                tfAccBalance.setText(accountBalance);
+                tfAccBalance.setEnabled(true);
+                tfLoanReqAmount.setText("0");
+                tfLoanReqAmount.setEnabled(false);
+                lblLoanSuggestedBalance.setText("0");
+                loanReqPanel.setVisible(false);
+            } else if(!accountType.equalsIgnoreCase(AccountType.LOAN.name()) && currentAccountStatus.equalsIgnoreCase(AccountStatus.INACTIVE.name())){
                 tfAccBalance.setText(accountBalance);
                 tfAccBalance.setEnabled(true);
                 tfLoanReqAmount.setText("0");

@@ -3,8 +3,32 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/account/view/screens/GetAllAccount.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/utils/UserQueryManager.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/account/view/screens/AccountListScreen.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/view/UserDashboard.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/usecase/UserUsecase.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/view/Dashboard.java</file>
             <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/view/AdminDashboard.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/view/LoginScreen.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/account/view/screens/AccountDetailScreen.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/view/UserView.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/core/BaseApp.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/view/assets/Image2.png</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/view/RegisterScreen.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/kyc/controller/KYCController.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/core/CustomDateFormatter.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/controller/UserController.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/view/assets/openBankAccount.jpg</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/repository/UserRepository.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/account/view/screens/GetAllAccount.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/view/assets/Image1.jpg</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/repository/UserRepositoryImpl.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/account/view/screens/AccountInfoPanel.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/view/assets/notification_icon.png</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/model/UserType.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/view/GetAllUser.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/account/view/AccountView.java</file>
+            <file>file:/D:/SEMESTER/SEMESTER%202/LED%202/BMS_Final/src/features/auth/view/assets/open%20bank%20acccount.png</file>
         </group>
     </open-files>
 </project-private>

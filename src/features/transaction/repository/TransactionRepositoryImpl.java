@@ -48,10 +48,15 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             accountRepository.updateAccountBalance(toAccountNumber, amount);
 
             // Insert transaction record
-            String query = TransactionQueryManager.insertTransferQuery(
-                    fromAccount.getAccountId(), toAccount.getAccountId(), amount, TransactionType.PAYMENT.name(),
+            String senderQuery = TransactionQueryManager.insertTransferQuery(
+                    fromAccount.getAccountId(), toAccount.getAccountId(), amount, TransactionType.PAYMENT_SEND.name(),
                     description, references);
-            dbConnection.executeOnly(query);
+            dbConnection.executeOnly(senderQuery);
+            
+            String receiverQuery = TransactionQueryManager.insertTransferQuery(
+                    toAccount.getAccountId(), fromAccount.getAccountId(), amount, TransactionType.PAYMENT_RECEIVED.name(),
+                    description, references);
+            dbConnection.executeOnly(receiverQuery);
 
             // Reward points for OTHER transactions
             if (fromAccount.getUserId() != toAccount.getUserId()) {
@@ -174,10 +179,15 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             accountRepository.updateAccountBalance(toAccountNumber, amount);
 
             // Insert transaction record
-            String query = TransactionQueryManager.insertTransferQuery(
-                    fromAccount.getAccountId(), toAccount.getAccountId(), amount, TransactionType.TRANSFER.name(),
+            String senderQuery = TransactionQueryManager.insertTransferQuery(
+                    fromAccount.getAccountId(), toAccount.getAccountId(), amount, TransactionType.TRANSFER_OUT.name(),
                     description, references);
-            dbConnection.executeOnly(query);
+            dbConnection.executeOnly(senderQuery);
+            
+            String receiverQuery = TransactionQueryManager.insertTransferQuery(
+                    toAccount.getAccountId(), fromAccount.getAccountId(), amount, TransactionType.TRANSFER_IN.name(),
+                    description, references);
+            dbConnection.executeOnly(receiverQuery);
             
             // Create notifications for both sender and receiver
             notificationRepository.createNotification(fromAccount.getUserId(),
