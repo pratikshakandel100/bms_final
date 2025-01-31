@@ -12,6 +12,7 @@ import features.account.model.Account;
 import features.account.model.AccountStatus;
 import features.account.model.AccountType;
 import features.auth.model.User;
+import features.auth.view.LoginScreen;
 import features.message.controller.MessageController;
 import features.message.model.MessageInfo;
 import features.message.model.MessageType;
@@ -51,6 +52,7 @@ public class AccountListScreen extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
         lblNewNotification = new javax.swing.JLabel();
+        lblLogout = new javax.swing.JLabel();
         infoPanel = new javax.swing.JPanel();
         pInfotitle = new javax.swing.JLabel();
         pInfoLabel = new javax.swing.JLabel();
@@ -91,7 +93,7 @@ public class AccountListScreen extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(650, 510));
+        setPreferredSize(new java.awt.Dimension(675, 510));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -99,7 +101,7 @@ public class AccountListScreen extends javax.swing.JFrame {
         });
 
         jPanel1.setBackground(new java.awt.Color(51, 255, 204));
-        jPanel1.setPreferredSize(new java.awt.Dimension(650, 510));
+        jPanel1.setPreferredSize(new java.awt.Dimension(675, 510));
 
         headerPanel.setBackground(new java.awt.Color(153, 255, 255));
         headerPanel.setName("RequestBankAccountPannel"); // NOI18N
@@ -130,6 +132,13 @@ public class AccountListScreen extends javax.swing.JFrame {
         lblNewNotification.setAlignmentX(0.5F);
         lblNewNotification.setIconTextGap(0);
 
+        lblLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-logout-21.png"))); // NOI18N
+        lblLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                onLogOutClick(evt);
+            }
+        });
+
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
         headerPanelLayout.setHorizontalGroup(
@@ -137,13 +146,15 @@ public class AccountListScreen extends javax.swing.JFrame {
             .addGroup(headerPanelLayout.createSequentialGroup()
                 .addGap(132, 132, 132)
                 .addComponent(pInfotitle1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                 .addComponent(lblNewNotification)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel21)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblName)
-                .addGap(57, 57, 57))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblLogout)
+                .addGap(24, 24, 24))
         );
         headerPanelLayout.setVerticalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,7 +166,8 @@ public class AccountListScreen extends javax.swing.JFrame {
                         .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel21)
                             .addComponent(lblName)
-                            .addComponent(lblNewNotification, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblNewNotification, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblLogout)))
                     .addComponent(pInfotitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -432,7 +444,7 @@ public class AccountListScreen extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblACNumL)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         loanAccountPannelLayout.setVerticalGroup(
             loanAccountPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -622,6 +634,13 @@ public class AccountListScreen extends javax.swing.JFrame {
         
     }//GEN-LAST:event_onNotificationClick
 
+    private void onLogOutClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onLogOutClick
+        // TODO add your handling code here:
+        Session.getSession().stopSession();
+        new LoginScreen().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_onLogOutClick
+
     void fetchedALlUserActiveAccount(User user){
         AccountController accountController = BaseApp.getAccountController();
                 List<Account> accountList = accountController.getAllActiveUserAccount(user.getUserId())
@@ -775,6 +794,7 @@ public class AccountListScreen extends javax.swing.JFrame {
     private javax.swing.JLabel lblBalanceL;
     private javax.swing.JLabel lblBalanceN;
     private javax.swing.JLabel lblBalanceS;
+    private javax.swing.JLabel lblLogout;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblNewNotification;
     private javax.swing.JPanel loanAccountPannel;

@@ -144,6 +144,7 @@ public class TransferBetweenAccount {
                     return;
                 }
                 String fromAccountNumber = fromAccount.split("/")[1];
+                
                 String toAccountNumber = toAccount.split("/")[1];
                 // Show confirmation dialog
                 int confirmationResponse = JOptionPane.showConfirmDialog(popup,
@@ -156,6 +157,17 @@ public class TransferBetweenAccount {
                         "Success", JOptionPane.OK_CANCEL_OPTION);
                 if(confirmationResponse == JOptionPane.OK_OPTION) {
                     TransactionController transactionController = BaseApp.getTransactionController();
+                    Account fromAccountDetails = BaseApp.getAccountController().getActiveAccountFromAccountNumber(fromAccountNumber);
+                    Double fromAccountBalance = fromAccountDetails.getBalance();
+                    String fromAccountType = fromAccountDetails.getAccountType();
+                    if (fromAccountBalance <= amount && !fromAccountType.equalsIgnoreCase(AccountType.LOAN.name())){
+                        JOptionPane.showMessageDialog(popup, "Insufficient funds in your account","Error",JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                    }
+                    if(fromAccountType.equalsIgnoreCase(AccountType.LOAN.name()) && fromAccountBalance <= 0.0){
+                        JOptionPane.showMessageDialog(popup, "You're already in Loan\nSo, You cannot make transfer","Error Insufficent Balance",JOptionPane.INFORMATION_MESSAGE);
+                        return;
+                    }
                     boolean result = transactionController.transferBetweenAccount(fromAccountNumber, toAccountNumber, amount, description, reference.isEmpty() ? "" : reference);
                     if(result){
                         JOptionPane.showMessageDialog(popup, "You payment is successful.","Payment Success",JOptionPane.INFORMATION_MESSAGE);
