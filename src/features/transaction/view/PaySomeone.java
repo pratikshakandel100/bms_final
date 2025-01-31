@@ -128,6 +128,7 @@ public class PaySomeone {
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(popup, "Invalid date. Please check your input.", "Error", JOptionPane.ERROR_MESSAGE);
+                    dayField.requestFocus();
                 }
             }
         });
@@ -164,6 +165,7 @@ public class PaySomeone {
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(popup, "Invalid date. Please check your input.", "Error", JOptionPane.ERROR_MESSAGE);
+                    dayField.requestFocus();
                 }
             }
             
@@ -172,7 +174,8 @@ public class PaySomeone {
         UserController uc = BaseApp.getUserController();
         Account account = ac.getActiveAccountFromAccountNumber(accountNumber);
         if(account == null){
-            JOptionPane.showMessageDialog(popup, "Account number must is incorrect.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(popup, "Account number is incorrect.", "Error", JOptionPane.ERROR_MESSAGE);
+             accountNumberField.requestFocus();
             return null;
         }
         User accountHolder = uc.getUserDetails(account.getUserId());
